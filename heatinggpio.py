@@ -6,7 +6,7 @@ import logging
 import threading
 from variables import Variables
 from database import DbUtils
-from max import checkHeat
+from max import MaxInterface
 from os import system
 import time
 
@@ -98,7 +98,7 @@ def hBeat(beat_time):
     module_logger.debug("heartbeat ended")
     
 
-def setupGPIO():
+def setupGPIO(input_queue):
     '''
     Constructor
     '''
@@ -170,7 +170,7 @@ def buttonCheckHeat(channel):
         time.sleep(sleepTime)
         GPIO.output(C_OK,GPIO.LOW)
     
-    checkHeat()
+    MaxInterface().checkHeat(0)
     setStatusLights()
 
 def buttonReboot(channel):

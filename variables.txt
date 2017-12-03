@@ -28,4 +28,10 @@ WeatherWidget,http://forecast.io/embed/#lat=57.155689&lon=-2.295520&name=Kier Ci
 BaseFontSize,3
 LoggingLevel,INFO
 ManualHeatingSwitch,1
-UseNeoPixel,0
+UseNeoPixel,1
+BoilerOverride,2
+ExpectedNoOfRooms,5
+RoomsCorrect,0
+VeraVirtualTemps,1
+VeraVirtualRooms,{'Bedroom 2':103; 'Bedroom 1':135; 'Dining-Extension':139; 'Living Room':157}
+VeraUpdateTemps,http://192.168.0.13:3480/data_request?id=variableset&DeviceNum={}&serviceId=urn:upnp-org:serviceId:TemperatureSensor1&Variable=CurrentTemperature&Value={}
