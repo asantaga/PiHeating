@@ -1,6 +1,8 @@
 FROM python:3
 MAINTAINER twistedsanity
 
+WORKDIR /usr/src/app
+
 # Evironment variables to be changed in variables.txt
 # ENV DEBIAN_FRONTEND=noninteractive 
 # $WebIP,192.168.0.41
@@ -18,10 +20,6 @@ MAINTAINER twistedsanity
 # $WeatherKey,713951e4ce665b2d2d5d1b7a10b88f63
 # $WeatherCityID,6640068
 # $WeatherWidget,http://forecast.io/embed/#lat=57.155689&lon=-2.295520&name=Kier Circle Westhill&units=uk
-
-
-# Use baseimage-docker's init system.
-# CMD ["/sbin/my_init"]
 
 # Update packages and install software
 RUN \
@@ -45,9 +43,8 @@ RUN \
 # Get and install PiHeating files
 	wget https://github.com/twistedsanity/PiHeating/archive/master.zip && \
 	unzip master.zip && \
-	mkdir /home/pi/heating && \
-	cp -rp PiHeating-master/* /home/pi/heating/ && \
-	chmod +x /home/pi/heating/main.py && \ 
+	cp -rp PiHeating-master/* /usr/src/app/ && \
+	chmod +x /usr/src/app/main.py && \ 
 
 	sed -i \
          's/WebIP,192.168.0.41/WebIP,$WebIP/' \
@@ -64,10 +61,10 @@ RUN \
 			   's/WebIP,192.168.0.41/$WeatherKey/' \
          's/WebIP,192.168.0.41/$WeatherCityID/' \
          's/WebIP,192.168.0.41/$WeatherWidget/' \
-		/home/pi/heating/variables.txt && \	
+		/usr/src/app/variables.txt && \	
 	
 # Volumes
-VOLUME /home/pi
+VOLUME /usr/src/app
 
 # Running scripts during container startup
 CMD [ "python", "./main.py" ]
