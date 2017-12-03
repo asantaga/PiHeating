@@ -63,7 +63,7 @@ RUN \
          's/WebIP,192.168.0.41/$WeatherWidget/' \
 		/home/pi/heating/variables.txt && \
 
-	echo "www-data ALL=(root) NOPASSWD: /usr/sbin/service"\ >> /etc/sudoers.d/sudoers && \
+	echo "www-data ALL=(root) NOPASSWD: /usr/sbin/service"\ >> /etc/sudoers.d/sudoers
 	
 	
 # Volumes
