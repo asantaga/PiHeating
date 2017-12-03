@@ -1,8 +1,6 @@
 FROM python:3
 MAINTAINER twistedsanity
 
-WORKDIR /usr/src/app
-
 # Evironment variables to be changed in variables.txt
 # ENV DEBIAN_FRONTEND=noninteractive 
 # $WebIP,192.168.0.41
@@ -43,8 +41,10 @@ RUN \
 # Get and install PiHeating files
 	wget https://github.com/twistedsanity/PiHeating/archive/master.zip && \
 	unzip master.zip && \
-	cp -rp PiHeating-master/* /usr/src/app/ && \
-	chmod +x /usr/src/app/main.py && \ 
+	mkdir /home/pi && \
+	mkdir /home/pi/heating && \
+	cp -rp PiHeating-master/* /home/pi/heating/ && \
+	chmod +x /home/pi/heating/main.py && \ 
 
 	sed -i \
          's/WebIP,192.168.0.41/WebIP,$WebIP/' \
@@ -61,10 +61,10 @@ RUN \
 			   's/WebIP,192.168.0.41/$WeatherKey/' \
          's/WebIP,192.168.0.41/$WeatherCityID/' \
          's/WebIP,192.168.0.41/$WeatherWidget/' \
-		/usr/src/app/variables.txt && \	
+		/home/pi/heating/variables.txt && \	
 	
 # Volumes
-VOLUME /usr/src/app
+VOLUME /home/pi
 
 # Running scripts during container startup
 CMD [ "python", "./main.py" ]
