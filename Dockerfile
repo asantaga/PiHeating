@@ -45,7 +45,7 @@ RUN \
 # Get and install PiHeating files
 	wget https://github.com/twistedsanity/PiHeating/archive/master.zip && \
 	unzip master.zip && \
-	cp -rp PiHeating-master/PiHeating/src/* /home/pi/ && \
+	cp -rp PiHeating-master/* /home/pi/heating/ && \
 	chmod +x /home/pi/heating/main.py && \ 
 
 	sed -i \
