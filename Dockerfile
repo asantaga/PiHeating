@@ -64,7 +64,7 @@ RUN \
 		/home/pi/heating/variables.txt && \	
 	
 # Volumes
-VOLUME /home/pi
+# VOLUME /home/pi
 
 # Running scripts during container startup
 CMD [ "python", "./main.py" ]
