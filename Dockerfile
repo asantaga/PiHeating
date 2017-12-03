@@ -29,6 +29,8 @@ RUN \
 	apt-get install -y \
 	apt-utils \
  	# python-dev \
+	wget \
+	unzip \
   
 # Needed for testing
 	nano \
