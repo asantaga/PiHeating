@@ -47,20 +47,20 @@ RUN \
 	chmod +x /home/pi/heating/main.py && \ 
 
 	sed -i \
-         's/WebIP,192.168.0.41/WebIP,$WebIP/' \
-         's/WebPort,4102/WebPort,$WebPort/' \
-			   's/MaxIP,192.168.0.36/MaxIP,$MaxIP/' \
-         's/MaxIP2,192.168.0.37/MaxIP2,$MaxIP2/' \
-         's/VeraIP,192.168.0.13/VeraIP,$VeraIP/' \
-         's/VeraDevice,92/VeraDevice,$VeraDevice/' \
-         's/VeraOutsideTempID,112/VeraOutsideTempID,$VeraOutsideTempID/' \
-         's/SingleRadThreshold,78/SingleRadThreshold,$SingleRadThreshold/' \
-         's/MultiRadThreshold,60/MultiRadThreshold,$MultiRadThreshold/' \
-         's/MultiRadCount,2/MultiRadCount,$MultiRadCount/' \
-         's/AllValveTotal,120/AllValveTotal,$AllValveTotal/' \
-			   's/WebIP,192.168.0.41/$WeatherKey/' \
-         's/WebIP,192.168.0.41/$WeatherCityID/' \
-         's/WebIP,192.168.0.41/$WeatherWidget/' \
+         -e 's/WebIP,192.168.0.41/WebIP,$WebIP/' \
+         -e 's/WebPort,4102/WebPort,$WebPort/' \
+	 -e 's/MaxIP,192.168.0.36/MaxIP,$MaxIP/' \
+         -e 's/MaxIP2,192.168.0.37/MaxIP2,$MaxIP2/' \
+         -e 's/VeraIP,192.168.0.13/VeraIP,$VeraIP/' \
+         -e 's/VeraDevice,92/VeraDevice,$VeraDevice/' \
+         -e 's/VeraOutsideTempID,112/VeraOutsideTempID,$VeraOutsideTempID/' \
+         -e 's/SingleRadThreshold,78/SingleRadThreshold,$SingleRadThreshold/' \
+         -e 's/MultiRadThreshold,60/MultiRadThreshold,$MultiRadThreshold/' \
+         -e 's/MultiRadCount,2/MultiRadCount,$MultiRadCount/' \
+         -e 's/AllValveTotal,120/AllValveTotal,$AllValveTotal/' \
+	 -e 's/WebIP,192.168.0.41/$WeatherKey/' \
+         -e 's/WebIP,192.168.0.41/$WeatherCityID/' \
+         -e 's/WebIP,192.168.0.41/$WeatherWidget/' \
 		/home/pi/heating/variables.txt && \	
 	
 # Volumes
