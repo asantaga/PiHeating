@@ -34,7 +34,7 @@ RUN \
 # Needed for testing
 	nano \
 	iputils-ping \
-	dnsutils \
+	dnsutils && \
 # End testing apps
 
 	apt-get clean && rm -rf /tmp/* /var/tmp/* && \
@@ -61,15 +61,10 @@ RUN \
 			   's/WebIP,192.168.0.41/$WeatherKey/' \
          's/WebIP,192.168.0.41/$WeatherCityID/' \
          's/WebIP,192.168.0.41/$WeatherWidget/' \
-		/home/pi/heating/variables.txt && \
-
-	echo "www-data ALL=(root) NOPASSWD: /usr/sbin/service"\ >> /etc/sudoers.d/sudoers
-	
+		/home/pi/heating/variables.txt && \	
 	
 # Volumes
 VOLUME /home/pi
-
-
 
 # Running scripts during container startup
 CMD [ "python", "./main.py" ]
