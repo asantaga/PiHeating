@@ -45,6 +45,7 @@ RUN \
 # Get and install PiHeating files
 	wget https://github.com/twistedsanity/PiHeating/archive/master.zip && \
 	unzip master.zip && \
+	mkdir /home/pi/heating && \
 	cp -rp PiHeating-master/* /home/pi/heating/ && \
 	chmod +x /home/pi/heating/main.py && \ 
 
