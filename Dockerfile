@@ -28,9 +28,8 @@ RUN \
 	apt-get update && \
 	apt-get install -y \
 	apt-utils \
-  # python-dev \
-  psutil \
-
+ 	# python-dev \
+  
 # Needed for testing
 	nano \
 	iputils-ping \
@@ -38,6 +37,7 @@ RUN \
 # End testing apps
 
 	apt-get clean && rm -rf /tmp/* /var/tmp/* && \
+	pip install psutil && \
 
 
 # Get and install PiHeating files
