@@ -1,4 +1,5 @@
-FROM python:3
+# FROM python:3
+FROM phusion/baseimage:latest
 MAINTAINER twistedsanity
 
 # Evironment variables to be changed in variables.txt
@@ -24,7 +25,7 @@ RUN \
 	apt-get update && \
 	apt-get install -y \
 	apt-utils \
- 	# python-dev \
+ 	python-dev \
 	wget \
 	unzip \
   
