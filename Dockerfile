@@ -39,6 +39,7 @@ RUN \
 	apt-get clean && rm -rf /tmp/* /var/tmp/* && \
 	pip install psutil && \
 	pip install requests && \
+	pip install RPi.GPIO && \
 
 
 # Get and install PiHeating files
