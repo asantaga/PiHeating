@@ -1,4 +1,4 @@
-import serial
+# import serial
 import time
 import multiprocessing
 import logging
