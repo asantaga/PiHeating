@@ -38,6 +38,7 @@ RUN \
 
 	apt-get clean && rm -rf /tmp/* /var/tmp/* && \
 	pip install psutil && \
+	pip install requests && \
 
 
 # Get and install PiHeating files
