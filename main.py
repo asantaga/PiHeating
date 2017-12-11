@@ -16,7 +16,7 @@ from logging.handlers import RotatingFileHandler
 from database import DbUtils
 import threading
 import multiprocessing
-# import neopixelserial
+import neopixelserial
 from SocketServer import ThreadingMixIn
 from BaseHTTPServer import HTTPServer
 from requesthandler import MyRequestHandler
