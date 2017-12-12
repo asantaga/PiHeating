@@ -8,7 +8,7 @@ from webui import CreateUIPage
 from graphing import MakeGraph
 from variables import Variables
 from sendmessage import SendMessage
-from heatinggpio import buttonCheckHeat, flashCube
+# from heatinggpio import buttonCheckHeat, flashCube
 from max import MaxInterface
 VAR = Variables()
 CUI = CreateUIPage()
@@ -41,9 +41,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.path="/index.html"
             time.sleep(1)
             if useNeoPixel:
-                MaxInterface().checkHeat(self.input_queue)
+#                MaxInterface().checkHeat(self.input_queue)
             else:
-                buttonCheckHeat("requesthandler.ecomode")
+#                buttonCheckHeat("requesthandler.ecomode")
             
         elif self.path[0:9] == '/automode':
             roomData = self.path
@@ -51,9 +51,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.path="/index.html"
             time.sleep(1)
             if useNeoPixel:
-                MaxInterface().checkHeat(self.input_queue)
+ #               MaxInterface().checkHeat(self.input_queue)
             else:
-                buttonCheckHeat("requesthandler.automode")
+ #               buttonCheckHeat("requesthandler.automode")
 
         elif self.path[0:11] == '/rangegraph':
             print 'going to create rangeGraph page'
@@ -62,22 +62,22 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             
         elif self.path[0:10] == '/heatcheck':
             if useNeoPixel:
-                MaxInterface().checkHeat(self.input_queue)
+ #               MaxInterface().checkHeat(self.input_queue)
             else:
-                buttonCheckHeat("requesthandler.heatcheck")
+#                buttonCheckHeat("requesthandler.heatcheck")
             self.path="/index.html"
             
         elif self.path[0:5] == '/mode':
             roomData = self.path
             SendMessage().updateRoom(roomData)
             if _platform == "linux" or _platform == "linux2":
-                flashCube()
+#                flashCube()
             self.path="/index.html"
             time.sleep(1)
             if useNeoPixel:
-                MaxInterface().checkHeat(self.input_queue)
+ #               MaxInterface().checkHeat(self.input_queue)
             else:
-                buttonCheckHeat("requesthandler.mode")
+#                buttonCheckHeat("requesthandler.mode")
             
         elif self.path[0:6] == '/graph':
             roomName = self.path
@@ -88,17 +88,17 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             VAR.writeVariable([['BoilerEnabled', 0]])
             self.path = "/index.html"
             if useNeoPixel:
-                MaxInterface().checkHeat(self.input_queue)
+ #               MaxInterface().checkHeat(self.input_queue)
             else:
-                buttonCheckHeat("requesthandler.Boiler-disable")
+#               buttonCheckHeat("requesthandler.Boiler-disable")
             
         elif self.path == '/?confirm=1&boilerswitch=Boiler+Disabled':
             VAR.writeVariable([['BoilerEnabled', 1]])
             self.path = "/index.html"
             if useNeoPixel:
-                MaxInterface().checkHeat(self.input_queue)
+  #              MaxInterface().checkHeat(self.input_queue)
             else:
-                buttonCheckHeat("requesthandler.boiler-enable")
+ #              buttonCheckHeat("requesthandler.boiler-enable")
             
         elif self.path =="/admin":
             roomTemps = CUI.createRooms()
