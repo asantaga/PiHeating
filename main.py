@@ -16,7 +16,7 @@ from logging.handlers import RotatingFileHandler
 from database import DbUtils
 import threading
 import multiprocessing
-import neopixelserial
+# import neopixelserial
 from SocketServer import ThreadingMixIn
 from BaseHTTPServer import HTTPServer
 from requesthandler import MyRequestHandler
@@ -54,7 +54,7 @@ class Main():
     def __init__(self):
         #Initialise the Logger
         logLevel = Variables().readVariables(['LoggingLevel']).rstrip('\r')
-        useNeoPixel = Variables().readVariables(['UseNeoPixel'])
+#        useNeoPixel = Variables().readVariables(['UseNeoPixel'])
         self.logger = logging.getLogger("main")
         level = logging.getLevelName(logLevel)
         self.logger.setLevel(level)
@@ -80,14 +80,14 @@ class Main():
         
         
         # Start Serial connection worker if using NeoPixel
-        if useNeoPixel:
-            self.arduino = neopixelserial.SerialProcess(input_queue, output_queue)
-            self.arduino.daemon = True
-            self.arduino.start()
+#        if useNeoPixel:
+#            self.arduino = neopixelserial.SerialProcess(input_queue, output_queue)
+#            self.arduino.daemon = True
+#            self.arduino.start()
 
         # Or start the GPIO
-        else:
-            setupGPIO(input_queue)
+#        else:
+#            setupGPIO(input_queue)
         
         # Start Web UI
         self.startKioskServer()
@@ -108,13 +108,11 @@ class Main():
                 if _platform == "linux" or _platform == "linux2":
                     if not useNeoPixel:
                         self.logger.info("checking heat levels")
-                        buttonCheckHeat("main")
-                        self.logger.info("starting heartbeat")
-                        hBeat(checkInterval)
+                        MaxInterface().checkHeat(input_queue)
+                        self.logger.info('Running NeoPixel timer')
                         self.logger.info("Memory free this loop %s MB" % hardware.getRAM())
                         self.logger.info("CPU Usage this loop %s" % hardware.getCPUUse())
                         self.logger.debug( "loop interval : %s" %(checkInterval))
-                        self.doLoop()
                     else:
                         self.logger.info("checking heat levels")
                         MaxInterface().checkHeat(input_queue)
