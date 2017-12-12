@@ -40,9 +40,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             SendMessage().updateRoom(roomData)
             self.path="/index.html"
             time.sleep(1)
-            if useNeoPixel:
+#            if useNeoPixel:
 #                MaxInterface().checkHeat(self.input_queue)
-            else:
+#            else:
 #                buttonCheckHeat("requesthandler.ecomode")
             
         elif self.path[0:9] == '/automode':
@@ -50,9 +50,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             SendMessage().updateRoom(roomData)
             self.path="/index.html"
             time.sleep(1)
-            if useNeoPixel:
+ #           if useNeoPixel:
  #               MaxInterface().checkHeat(self.input_queue)
-            else:
+ #           else:
  #               buttonCheckHeat("requesthandler.automode")
 
         elif self.path[0:11] == '/rangegraph':
@@ -61,9 +61,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             time.sleep(1)
             
         elif self.path[0:10] == '/heatcheck':
-            if useNeoPixel:
+ #           if useNeoPixel:
  #               MaxInterface().checkHeat(self.input_queue)
-            else:
+ #           else:
 #                buttonCheckHeat("requesthandler.heatcheck")
             self.path="/index.html"
             
@@ -74,9 +74,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #                flashCube()
             self.path="/index.html"
             time.sleep(1)
-            if useNeoPixel:
+ #           if useNeoPixel:
  #               MaxInterface().checkHeat(self.input_queue)
-            else:
+ #           else:
 #                buttonCheckHeat("requesthandler.mode")
             
         elif self.path[0:6] == '/graph':
@@ -87,17 +87,17 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         elif self.path =="/?confirm=1&boilerswitch=Boiler+Enabled":
             VAR.writeVariable([['BoilerEnabled', 0]])
             self.path = "/index.html"
-            if useNeoPixel:
+ #           if useNeoPixel:
  #               MaxInterface().checkHeat(self.input_queue)
-            else:
+ #           else:
 #               buttonCheckHeat("requesthandler.Boiler-disable")
             
         elif self.path == '/?confirm=1&boilerswitch=Boiler+Disabled':
             VAR.writeVariable([['BoilerEnabled', 1]])
             self.path = "/index.html"
-            if useNeoPixel:
+  #          if useNeoPixel:
   #              MaxInterface().checkHeat(self.input_queue)
-            else:
+  #          else:
  #              buttonCheckHeat("requesthandler.boiler-enable")
             
         elif self.path =="/admin":
