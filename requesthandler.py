@@ -72,8 +72,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             SendMessage().updateRoom(roomData)
             if _platform == "linux" or _platform == "linux2":
 #                flashCube()
-            self.path="/index.html"
-            time.sleep(1)
+#            self.path="/index.html"
+#            time.sleep(1)
  #           if useNeoPixel:
  #               MaxInterface().checkHeat(self.input_queue)
  #           else:
