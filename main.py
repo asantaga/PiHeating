@@ -20,7 +20,7 @@ import multiprocessing
 from SocketServer import ThreadingMixIn
 from BaseHTTPServer import HTTPServer
 from requesthandler import MyRequestHandler
-from heatinggpio import setupGPIO, buttonCheckHeat, hBeat
+#from heatinggpio import setupGPIO, buttonCheckHeat, hBeat
 from variables import Variables
 from sys import platform as _platform
 from os import system
