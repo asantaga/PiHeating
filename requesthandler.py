@@ -50,61 +50,61 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             SendMessage().updateRoom(roomData)
             self.path="/index.html"
             time.sleep(1)
- #           if useNeoPixel:
- #               MaxInterface().checkHeat(self.input_queue)
- #           else:
- #               buttonCheckHeat("requesthandler.automode")
+#            if useNeoPixel:
+#                MaxInterface().checkHeat(self.input_queue)
+#            else:
+#                buttonCheckHeat("requesthandler.automode")
 
         if self.path[0:11] == '/rangegraph':
             print 'going to create rangeGraph page'
             CUI.rangeGraphUI()
             time.sleep(1)
-            
+
         if self.path[0:10] == '/heatcheck':
- #           if useNeoPixel:
- #               MaxInterface().checkHeat(self.input_queue)
- #           else:
+#            if useNeoPixel:
+#                MaxInterface().checkHeat(self.input_queue)
+#            else:
 #                buttonCheckHeat("requesthandler.heatcheck")
             self.path="/index.html"
-            
+
         if self.path[0:5] == '/mode':
             roomData = self.path
             SendMessage().updateRoom(roomData)
-            if _platform == "linux" or _platform == "linux2":
+#            if _platform == "linux" or _platform == "linux2":
 #                flashCube()
 #            self.path="/index.html"
 #            time.sleep(1)
- #           if useNeoPixel:
- #               MaxInterface().checkHeat(self.input_queue)
- #           else:
+#            if useNeoPixel:
+#                MaxInterface().checkHeat(self.input_queue)
+#            else:
 #                buttonCheckHeat("requesthandler.mode")
-            
+
         if self.path[0:6] == '/graph':
             roomName = self.path
             GRAPH.createGraph(roomName)
             self.path="/graph.html"
-            
+
         if self.path =="/?confirm=1&boilerswitch=Boiler+Enabled":
             VAR.writeVariable([['BoilerEnabled', 0]])
             self.path = "/index.html"
- #           if useNeoPixel:
- #               MaxInterface().checkHeat(self.input_queue)
- #           else:
+#            if useNeoPixel:
+#                MaxInterface().checkHeat(self.input_queue)
+#            else:
 #               buttonCheckHeat("requesthandler.Boiler-disable")
-            
+
         if self.path == '/?confirm=1&boilerswitch=Boiler+Disabled':
             VAR.writeVariable([['BoilerEnabled', 1]])
             self.path = "/index.html"
-  #          if useNeoPixel:
-  #              MaxInterface().checkHeat(self.input_queue)
-  #          else:
- #              buttonCheckHeat("requesthandler.boiler-enable")
-            
+#            if useNeoPixel:
+#                MaxInterface().checkHeat(self.input_queue)
+#            else:
+#                buttonCheckHeat("requesthandler.boiler-enable")
+
         elif self.path =="/admin":
             roomTemps = CUI.createRooms()
             self.path = "/admin.html"
             self.updateUIPages(roomTemps)
-            
+
         elif self.path == "/shutdown":
             if _platform == "linux" or _platform == "linux2":
                 print 'In Linux so shutting down'
