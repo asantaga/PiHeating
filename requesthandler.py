@@ -35,7 +35,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.path="/index.html"
             self.updateUIPages(roomTemps)
             
-        elif self.path[0:8] == '/ecomode':
+        if self.path[0:8] == '/ecomode':
             roomData = self.path
             SendMessage().updateRoom(roomData)
             self.path="/index.html"
@@ -45,7 +45,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #            else:
 #                buttonCheckHeat("requesthandler.ecomode")
             
-        elif self.path[0:9] == '/automode':
+        if self.path[0:9] == '/automode':
             roomData = self.path
             SendMessage().updateRoom(roomData)
             self.path="/index.html"
@@ -55,19 +55,19 @@ class MyRequestHandler(BaseHTTPRequestHandler):
  #           else:
  #               buttonCheckHeat("requesthandler.automode")
 
-        elif self.path[0:11] == '/rangegraph':
+        if self.path[0:11] == '/rangegraph':
             print 'going to create rangeGraph page'
             CUI.rangeGraphUI()
             time.sleep(1)
             
-        elif self.path[0:10] == '/heatcheck':
+        if self.path[0:10] == '/heatcheck':
  #           if useNeoPixel:
  #               MaxInterface().checkHeat(self.input_queue)
  #           else:
 #                buttonCheckHeat("requesthandler.heatcheck")
             self.path="/index.html"
             
-        elif self.path[0:5] == '/mode':
+        if self.path[0:5] == '/mode':
             roomData = self.path
             SendMessage().updateRoom(roomData)
             if _platform == "linux" or _platform == "linux2":
@@ -79,12 +79,12 @@ class MyRequestHandler(BaseHTTPRequestHandler):
  #           else:
 #                buttonCheckHeat("requesthandler.mode")
             
-        elif self.path[0:6] == '/graph':
+        if self.path[0:6] == '/graph':
             roomName = self.path
             GRAPH.createGraph(roomName)
             self.path="/graph.html"
             
-        elif self.path =="/?confirm=1&boilerswitch=Boiler+Enabled":
+        if self.path =="/?confirm=1&boilerswitch=Boiler+Enabled":
             VAR.writeVariable([['BoilerEnabled', 0]])
             self.path = "/index.html"
  #           if useNeoPixel:
@@ -92,7 +92,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
  #           else:
 #               buttonCheckHeat("requesthandler.Boiler-disable")
             
-        elif self.path == '/?confirm=1&boilerswitch=Boiler+Disabled':
+        if self.path == '/?confirm=1&boilerswitch=Boiler+Disabled':
             VAR.writeVariable([['BoilerEnabled', 1]])
             self.path = "/index.html"
   #          if useNeoPixel:
