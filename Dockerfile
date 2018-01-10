@@ -1,6 +1,6 @@
 # FROM python:3
-# FROM phusion/baseimage:latest
-FROM resin/rpi-raspbian
+FROM phusion/baseimage:latest
+# FROM resin/rpi-raspbian
 MAINTAINER twistedsanity
 
 # Evironment variables to be changed in variables.txt
