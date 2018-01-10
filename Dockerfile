@@ -69,6 +69,5 @@ RUN \
 	
 # Volumes
 # VOLUME /home/pi
-RUN \
 # Running scripts during container startup
-CMD [ "python", "/home/pi/heating/main.py" ]
+#CMD [ "python", "/home/pi/heating/main.py" ]
