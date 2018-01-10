@@ -1,5 +1,6 @@
 # FROM python:3
-FROM phusion/baseimage:latest
+# FROM phusion/baseimage:latest
+FROM resin/rpi-raspbian
 MAINTAINER twistedsanity
 
 # Evironment variables to be changed in variables.txt
@@ -29,6 +30,7 @@ RUN \
  	python-dev \
 	wget \
 	unzip \
+	sudo \
   
 # Needed for testing
 	nano \
@@ -36,9 +38,12 @@ RUN \
 	dnsutils  # && \
 # End testing apps
 RUN \
-	apt-get clean && rm -rf /tmp/* /var/tmp/* && \
-	pip install psutil && \
-	pip install requests && \
+	apt-get clean && rm -rf /tmp/* /var/tmp/* # && \
+RUN \
+	pip install psutil # && \
+RUN \
+	pip install requests # && \
+RUN \
 	pip install RPi.GPIO # && \
 
 RUN \
