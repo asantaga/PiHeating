@@ -33,23 +33,23 @@ RUN \
 # Needed for testing
 	nano \
 	iputils-ping \
-	dnsutils && \
+	dnsutils  # && \
 # End testing apps
-
+RUN \
 	apt-get clean && rm -rf /tmp/* /var/tmp/* && \
 	pip install psutil && \
 	pip install requests && \
-	pip install RPi.GPIO && \
+	pip install RPi.GPIO # && \
 
-
+RUN \
 # Get and install PiHeating files
 	wget https://github.com/twistedsanity/PiHeating/archive/master.zip && \
 	unzip master.zip && \
 	mkdir /home/pi && \
 	mkdir /home/pi/heating && \
 	cp -rp PiHeating-master/* /home/pi/heating/ && \
-	chmod +x /home/pi/heating/main.py && \ 
-
+	chmod +x /home/pi/heating/main.py # && \ 
+RUN \
 	sed -i \
          -e 's/WebIP,192.168.0.41/WebIP,$WebIP/' \
          -e 's/WebPort,4102/WebPort,$WebPort/' \
