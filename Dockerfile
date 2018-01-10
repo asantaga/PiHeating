@@ -64,7 +64,7 @@ RUN \
          -e 's/AllValveTotal,120/AllValveTotal,$AllValveTotal/' \
 	 -e 's/WebIP,192.168.0.41/$WeatherKey/' \
          -e 's/WebIP,192.168.0.41/$WeatherCityID/' \
-         -e 's/WebIP,192.168.0.41/$WeatherWidget/' \
+         -e 's/WebIP,192.168.0.41/$WeatherWidget/' && \
 #		/home/pi/heating/variables.txt	
 	
 # Volumes
