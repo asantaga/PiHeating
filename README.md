@@ -1,4 +1,7 @@
-# PiHeating
+# PiHeating converted to work with Docker
+To complete:
+    Variables not applying therefore all IPs need to be manually entered.
+
 Python code for Raspberry Pi to control a wireless boiler via Vera home automation with heat information from MAX! Cube.
 
 RPi Python Software to switch on a wireless controled boiler depending on what states the valves are in on the MAX Radiator Thermostats.
