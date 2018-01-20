@@ -212,7 +212,7 @@ class CreateUIPage():
             if actualTemp == "0.0":
                 logger.info("{} temp was 0.0".format(roomText))
                 # print goodTemps
-                actualTemp = goodTemps[roomText]
+                actualTemp = goodTemps.get(roomText,0)
                 # print actualTemp
             # Or save new good temp to DB
 
