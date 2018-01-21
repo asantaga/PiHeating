@@ -67,7 +67,7 @@ class CreateUIPage():
         print 'Creating rangeGraph page'
         pageText = []
         pageText.append(self.pageTop())
-        pageText.append(self.pageHeader())
+        pageText.append(self.pageHeader("Graph Page"))
         pageText.append(self.rangeGraphpage())
         pageText.append(self.buttonLayout())
         pageText.append(self.weatherWidget())

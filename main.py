@@ -20,7 +20,7 @@ import multiprocessing
 from SocketServer import ThreadingMixIn
 from BaseHTTPServer import HTTPServer
 from requesthandler import MyRequestHandler
-#from heatinggpio import setupGPIO, buttonCheckHeat, hBeat
+from heatinggpio import setupGPIO, buttonCheckHeat, hBeat, setStatusLights
 from variables import Variables
 from sys import platform as _platform
 from os import system
@@ -56,8 +56,8 @@ class Main():
         logLevel = Variables().readVariables(['LoggingLevel']).rstrip('\r')
 #        useNeoPixel = Variables().readVariables(['UseNeoPixel'])
         self.logger = logging.getLogger("main")
-        level = logging.getLevelName(logLevel)
-        self.logger.setLevel(level)
+        level = logging.getLevelName("DEBUG")
+        self.logger.setLevel(logging.DEBUG)
         
         fh = RotatingFileHandler("heating.log",
                                  maxBytes=1000000, # 1Mb I think
@@ -85,9 +85,9 @@ class Main():
 #            self.arduino.daemon = True
 #            self.arduino.start()
 
-        # Or start the GPIO
+#        # Or start the GPIO
 #        else:
-#            setupGPIO(input_queue)
+        setupGPIO(input_queue)
         
         # Start Web UI
         self.startKioskServer()
@@ -123,7 +123,7 @@ class Main():
                 else:
                     MaxInterface().checkHeat(input_queue)
                     self.logger.info('Running Windows timer')
-                    
+                setStatusLights() 
                 
                     
                 nextLoopCheck = loopStartTime + checkInterval

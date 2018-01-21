@@ -1,8 +1,9 @@
-
 import logging
 from database import DbUtils
 from variables import Variables
 from webui import CreateUIPage
+from heatinggpio import relayHeating
+
 import base64
 import socket
 import datetime
@@ -531,9 +532,9 @@ class MaxInterface():
                 module_logger.info("vera is unreachable")
 
             # Set Manual Boiler Switch if enabled
-    #         if ManualHeatingSwitch:
-    #             module_logger.info("Switching local Relay %s" %boilerState)
-    #             relayHeating(boilerState)
+            if ManualHeatingSwitch:
+                 module_logger.info("Switching local Relay %s" %boilerState)
+                 relayHeating(boilerState)
         else:
             boilerState = 0
             try:
@@ -548,9 +549,9 @@ class MaxInterface():
                 module_logger.info("vera is unreachable")
 
             # Set Manual Boiler Switch if enabled
-    #         if ManualHeatingSwitch:
-    #             module_logger.info("Switching local Relay %s" %boilerState)
-    #             relayHeating(boilerState)
+            if ManualHeatingSwitch:
+                module_logger.info("Switching local Relay %s" %boilerState)
+                relayHeating(boilerState)
         try:
             boilerOn = DbUtils().getBoiler()[2]
         except:
