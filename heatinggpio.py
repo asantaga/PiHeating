@@ -8,6 +8,7 @@ from database import DbUtils
 # from max import MaxInterface
 from os import system
 import time
+from notifications import sendNotification
 
 module_logger = logging.getLogger("main.heatinggpio")
 

@@ -4,7 +4,5 @@
 # call with one parameter -r for reboot -c for check
 
 
-cd /
-cd home/pi/heating
+cd /home/pi/PiHeating 
 sudo python bootup.py "$1"
-cd /

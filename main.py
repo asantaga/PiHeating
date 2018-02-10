@@ -57,7 +57,7 @@ class Main():
 #        useNeoPixel = Variables().readVariables(['UseNeoPixel'])
         self.logger = logging.getLogger("main")
         level = logging.getLevelName("DEBUG")
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
         
         fh = RotatingFileHandler("heating.log",
                                  maxBytes=1000000, # 1Mb I think

@@ -1,0 +1,21 @@
+2018-01-23 09:45:56,106 - bootup - INFO - bootup.py has started
+2018-01-23 09:45:56,110 - bootup - INFO - bootup passed args restart
+2018-01-23 09:45:56,378 - bootup - INFO - Process is already running
+2018-01-23 09:46:18,838 - bootup - INFO - bootup.py has started
+2018-01-23 09:46:18,841 - bootup - INFO - bootup passed args restart
+2018-01-23 09:46:19,107 - bootup - INFO - Process is already running
+2018-01-23 09:47:02,424 - bootup - INFO - bootup.py has started
+2018-01-23 09:47:02,428 - bootup - INFO - bootup passed args 0
+2018-01-23 09:47:02,695 - bootup - INFO - The process is not running. Lets Restart
+2018-01-23 09:54:10,049 - bootup - INFO - bootup.py has started
+2018-01-23 09:54:10,053 - bootup - INFO - bootup passed args 0
+2018-01-23 09:54:10,314 - bootup - INFO - The process is not running. Lets Restart
+2018-01-25 13:29:37,512 - bootup - INFO - bootup.py has started
+2018-01-25 13:29:37,517 - bootup - INFO - bootup passed args 0
+2018-01-25 13:29:37,793 - bootup - INFO - The process is not running. Lets Restart
+2018-01-25 13:36:09,154 - bootup - INFO - bootup.py has started
+2018-01-25 13:36:09,158 - bootup - INFO - bootup passed args 0
+2018-01-25 13:36:09,442 - bootup - INFO - The process is not running. Lets Restart
+2018-01-29 00:03:24,386 - bootup - INFO - bootup.py has started
+2018-01-29 00:03:24,390 - bootup - INFO - bootup passed args 0
+2018-01-29 00:03:24,667 - bootup - INFO - The process is not running. Lets Restart

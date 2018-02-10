@@ -10,7 +10,6 @@ import time
 logger = logging.getLogger("bootup")
 level = logging.getLevelName(logging.INFO)
 logger.setLevel(level)
-#self.logger.setLevel(logging.INFO)
 
 fh = RotatingFileHandler("bootup.log",
                          maxBytes=1000000, # 1Mb I think

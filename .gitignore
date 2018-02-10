@@ -5,3 +5,5 @@ admin.html
 index.html
 heating.log*
 graph.html
+bootup.log
+.idea/

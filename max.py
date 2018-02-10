@@ -497,21 +497,27 @@ class MaxInterface():
             valveList.append(room[4])
 
         singleRadOn = sum(i >= singleRadThreshold for i in valveList)
-        multiRadOn = sum(i >= multiRadThreshold for i in valveList)
-        totalRadOn = sum(valveList)
+        multiRadOn = sum(i >=  multiRadThreshold for i in valveList)
+        totalRadOn = sum(i >=  10 for i in valveList)
 
         if singleRadOn >= 1 or multiRadOn >= multiRadCount or totalRadOn >= AllValveTotal:
             boilerState = 1
         else:
             boilerState = 0
 
+        # Print out Summary Information
+        module_logger.info("Number of Single Radiators over threashold %s " % singleRadOn)
+        module_logger.info("Number of Multiple Radiators over threashold %s" % multiRadOn)
+        module_logger.info("Total Radiators on %s" % totalRadOn)
+        module_logger.info("Setting Boiler state to %s" % boilerState)
+
         # Boiler Override
         if boilerOverride == 1:
-            module_logger.info('Boiler overridden ON')
+            module_logger.info('Boiler override ON')
             boilerState = 1
         if boilerOverride == 0:
             boilerState = 0
-            module_logger.info('Boiler overridden OFF')
+            module_logger.info('Boiler overrideOFF')
 
         module_logger.info("main.max.switchHeat Boiler is %s, Heating is %s" % (
             boilerEnabled, boilerState))
@@ -519,6 +525,8 @@ class MaxInterface():
         # Update Temps database
         DbUtils().insertTemps(roomTemps)
 
+        # Control Boiler
+        #todo : Put if/else around veracontrol
         if boilerEnabled:
             try:
                 _ = requests.get(veraControl.format(Vera_Address, Vera_Port,
@@ -537,13 +545,13 @@ class MaxInterface():
                  relayHeating(boilerState)
         else:
             boilerState = 0
+
             try:
                 _ = requests.get(veraControl.format(Vera_Address, Vera_Port,
                                                     Vera_Device, boilerState), timeout=5)
 
                 Variables().writeVariable([['VeraOK', 1]])
                 module_logger.info("Boiler is Disabled")
-
             except:
                 Variables().writeVariable([['VeraOK', 0]])
                 module_logger.info("vera is unreachable")
