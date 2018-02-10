@@ -12,18 +12,18 @@ from notifications import sendNotification
 
 module_logger = logging.getLogger("main.heatinggpio")
 
-B_OFF = 04      # Boiler off LED
+B_OFF = 04      # Boiler off LED    ANGELOUNUSED
 H_ON  = 17      # Heat On LED
-H_OFF = 18      # Heat Off LED
-C_OK  = 22      # Cube OK LED
-C_ERR = 23      # Cube Error LED
-V_OK  = 24      # Vera Ok LED
-V_ERR = 25      # Vera Error LED
+H_OFF = 18      # Heat Off LED      ANGELOUNUSED
+C_OK  = 22      # Cube OK LED       ANGELOUNUSED
+C_ERR = 23      # Cube Error LED    ANGELOUNUSED
+V_OK  = 24      # Vera Ok LED       ANGELOUNUSED
+V_ERR = 25      # Vera Error LED    ANGELOUNUSED
 HBEAT = 27      # HEARTBEAT LED
-ON_OFF = 05     # Boiler ON/Off button
-CHECKH = 06     # Manual Valve check button
-SHUTDOWN = 12   # Shutdown RPi button
-REBOOT   = 13   # Reboot RPi button
+ON_OFF = 05     # Boiler ON/Off button  ANGELOUNUSED
+CHECKH = 06     # Manual Valve check button ANGELOUNUSED
+SHUTDOWN = 12   # Shutdown RPi button   ANGELOUNUSED
+REBOOT   = 11   # Reboot RPi button
 BOILER_SW= 07   # Boiler relay switch output
 
 
