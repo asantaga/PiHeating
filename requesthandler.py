@@ -8,11 +8,13 @@ from webui import CreateUIPage
 from graphing import MakeGraph
 from variables import Variables
 from sendmessage import SendMessage
+
 # from heatinggpio import buttonCheckHeat, flashCube
 from max import MaxInterface
 VAR = Variables()
 CUI = CreateUIPage()
 GRAPH = MakeGraph()
+#DB = DbUtils()
 
 import logging
 
@@ -35,6 +37,19 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.path="/index.html"
             self.updateUIPages(roomTemps)
             
+# REST call to retun status of boiler :
+        if self.path[0:7] == '/status':
+            from database import DbUtils
+            DB=DbUtils() 
+            heatingState=DB.getBoiler()[2]
+
+            # boilerStatus = VAR.readVariables(['BoilerEnabled'])
+            statusResponse="{{'boilerStatus':'{}'}}".format(heatingState)
+            self.send_response(200)
+            self.send_header('Content-type',"application/json")
+            self.end_headers()
+            self.wfile.write(statusResponse)
+
         if self.path[0:8] == '/ecomode':
             roomData = self.path
             SendMessage().updateRoom(roomData)

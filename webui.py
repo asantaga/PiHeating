@@ -421,7 +421,7 @@ class CreateUIPage():
                     {}
                 </div>
                 <div class="col-sm-10 child">
-                    <h2>Heating Status @ {} <span class="badge">{}</span></h2>
+                    <h2>Heating Status @ {} <span class="badge">{}xxx</span></h2>
                 </div>
                 <div class="col-sm-1 child">
                     <a href="/index.html" class="btn btn-primary" role="button">Refresh Page <span class="badge">{}</span></a>
