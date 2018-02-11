@@ -21,13 +21,28 @@ Edit the variables.txt file before running to match your Pi IP address and your 
 Before setting up auto starting using the crontab instructions it is a good idea to run the software manually on a command line to check for any problems. just "$ sudo python main.py" to start from inside the PiHeating directory. I left some print statements in so you should see lists of your rooms at some point.
 
 
-Autostart using systemd
+## Autostart using systemd
 - Added file into /config to use with systemd
   sudo cp /home/pi/PiHeating/piheating.service /lib/systemd/system/piheating.service
   To start use
+  ```
   sudo systemctl start piheating.service 
+  ```
   To stop use 
+  ```
   sudo systemctl stop piheating.service 
+  ```
   To enable start at boot  use 
+  ```
   sudo systemctl enable piheating.service 
+  ```
   
+## REST API
+
+Only one api implemented. The /status api allows you to see the status of the boiler (1=On , 0=Off)
+
+GET /status
+```json
+{'boilerStatus':'1'}
+```
+
