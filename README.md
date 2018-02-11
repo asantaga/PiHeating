@@ -23,7 +23,7 @@ Before setting up auto starting using the crontab instructions it is a good idea
 
 Autostart using systemd
 - Added file into /config to use with systemd
-  sudo cp /home/pi/PiHeating/piheating.service /lib/systemd/system/myscript.service
+  sudo cp /home/pi/PiHeating/piheating.service /lib/systemd/system/piheating.service
   To start use
   sudo systemctl start piheating.service 
   To stop use 

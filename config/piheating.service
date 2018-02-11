@@ -3,13 +3,12 @@ Description=Pi Heating
 After=network.target
 
 [Service]
-ExecStart=/home/pi/PiHeating/launchpi.sh start
-ExecStop=/home/pi/PiHeating/launchpi.sh stop
+ExecStart=/usr/bin/python /home/pi/PiHeating/main.py
 WorkingDirectory=/home/pi/PiHeating
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
-User=pi
+User=root
 
 [Install]
 WantedBy=multi-user.target

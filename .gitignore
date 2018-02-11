@@ -7,3 +7,5 @@ heating.log*
 graph.html
 bootup.log
 .idea/
+nohup.out
+*.swp
