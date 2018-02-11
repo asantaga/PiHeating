@@ -564,7 +564,7 @@ class CreateUIPage():
             heatIsOn = 'btn-info btn-md" style="font-size: {}vw;">Heating is OFF '.format(
                 baseFontSize - buttonSize)
 
-        print "Cube state {}".format(cube_state)
+        print "Cube xstate {}".format(cube_state)
         if cube_state == 1:
             cubeIsOn = 'btn-success btn-md" style="font-size: {}vw;">Cube{} '.format(
                 baseFontSize - buttonSize, active_cube)
@@ -576,11 +576,9 @@ class CreateUIPage():
                 baseFontSize - buttonSize, active_cube)
 
         if vera_state:
-            veraIsOn = 'btn-success btn-md" style="font-size: {}vw;">Vera'.format(
-                baseFontSize - buttonSize)
+            veraIsOn = '<button type="button" class="btn-warning btn-md" style="font-size: {}vw;">Vera</button>'.format( baseFontSize - buttonSize)
         else:
-            veraIsOn = 'btn-warning btn-md" style="font-size: {}vw;">Vera'.format(
-                baseFontSize - buttonSize)
+            veraIsOn = ''
 
         html_text = """
     <div class="container-fluid bg-2 text-center">
@@ -592,7 +590,7 @@ class CreateUIPage():
             <input type="submit" class="btn {0}
             <a href="/heatcheck" class="btn {1}<span class="badge" style="font-size: {6}vw;">{2}%</span></a>
             <button type="button" class="btn {3}<span class="badge" style="font-size: {6}vw;">{4}</span></button>
-            <button type="button" class="btn {5}</button>
+            {5}
         </form>
         </div>
     </div>
