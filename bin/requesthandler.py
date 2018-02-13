@@ -44,7 +44,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             heatingState=DB.getBoiler()[2]
 
             # boilerStatus = VAR.readVariables(['BoilerEnabled'])
-            statusResponse="{{'boilerStatus':'{}'}}".format(heatingState)
+            statusResponse="{{\"boilerStatus\":\"{}\"}}".format(heatingState)
             self.send_response(200)
             self.send_header('Content-type',"application/json")
             self.end_headers()
