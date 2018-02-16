@@ -20,7 +20,7 @@ class CreateUIPage():
     def updateWebUI(self):
         roomTemps = self.createRooms()
         self.saveUI(roomTemps)
-        self.saveAdminUI()
+        #self.saveAdminUI()
 
     def saveUI(self, roomTemps):
         # print 'SAVE UI'

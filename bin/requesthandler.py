@@ -37,13 +37,13 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.path="/index.html"
             self.updateUIPages(roomTemps)
             
+#
 # REST call to retun status of boiler :
+#
         if self.path[0:7] == '/status':
             from database import DbUtils
             DB=DbUtils() 
             heatingState=DB.getBoiler()[2]
-
-            # boilerStatus = VAR.readVariables(['BoilerEnabled'])
             statusResponse="{{\"boilerStatus\":\"{}\"}}".format(heatingState)
             self.send_response(200)
             self.send_header('Content-type',"application/json")
@@ -87,7 +87,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             SendMessage().updateRoom(roomData)
 #            if _platform == "linux" or _platform == "linux2":
 #                flashCube()
-#            self.path="/index.html"
+            self.path="/index.html"
 #            time.sleep(1)
 #            if useNeoPixel:
 #                MaxInterface().checkHeat(self.input_queue)

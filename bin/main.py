@@ -38,6 +38,7 @@ shutdown_Timer = 0.0
 shutOff_Timer = 0.0
 
 
+
 def mainCheckHeat(self):
     MaxInterface().checkHeat(input_queue)
 
@@ -132,6 +133,7 @@ class Main():
                 serialData = output_queue.get().rstrip()
                 self.processSerial(serialData)
 
+            hBeat(2)
             time.sleep(.2)
             
     

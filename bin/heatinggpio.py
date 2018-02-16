@@ -89,14 +89,14 @@ def hBeat(beat_time):
         startTime = time.time()
 
     heart.stop()
-    GPIO.output(B_OFF,GPIO.LOW)
-    GPIO.output(H_ON,GPIO.LOW)
-    GPIO.output(H_OFF,GPIO.LOW)
-    GPIO.output(C_OK,GPIO.LOW)
-    GPIO.output(C_ERR,GPIO.LOW)
-    GPIO.output(V_OK,GPIO.LOW)
-    GPIO.output(V_ERR,GPIO.LOW)
-    GPIO.output(HBEAT,GPIO.LOW)
+#    GPIO.output(B_OFF,GPIO.LOW)
+#    GPIO.output(H_ON,GPIO.LOW)
+#    GPIO.output(H_OFF,GPIO.LOW)
+#    GPIO.output(C_OK,GPIO.LOW)
+#    GPIO.output(C_ERR,GPIO.LOW)
+#    GPIO.output(V_OK,GPIO.LOW)
+#    GPIO.output(V_ERR,GPIO.LOW)
+#    GPIO.output(HBEAT,GPIO.LOW)
     module_logger.debug("heartbeat ended")
     
 
