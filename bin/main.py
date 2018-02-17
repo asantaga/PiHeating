@@ -55,7 +55,7 @@ class Main():
     def __init__(self):
         #Initialise the Logger
         logLevel = Variables().readVariables(['LoggingLevel']).rstrip('\r')
-#        useNeoPixel = Variables().readVariables(['UseNeoPixel'])
+        useNeoPixel = Variables().readVariables(['UseNeoPixel'])
         self.logger = logging.getLogger("main")
         level = logging.getLevelName("DEBUG")
         self.logger.setLevel(logging.INFO)
@@ -107,26 +107,15 @@ class Main():
                 if boiler_enabled != 1:
                     checkInterval = checkInterval * 2
                 if _platform == "linux" or _platform == "linux2":
-                    if not useNeoPixel:
-                        self.logger.info("checking heat levels")
-                        MaxInterface().checkHeat(input_queue)
-                        self.logger.info('Running NeoPixel timer')
-                        self.logger.info("Memory free this loop %s MB" % hardware.getRAM())
-                        self.logger.info("CPU Usage this loop %s" % hardware.getCPUUse())
-                        self.logger.debug( "loop interval : %s" %(checkInterval))
-                    else:
-                        self.logger.info("checking heat levels")
-                        MaxInterface().checkHeat(input_queue)
-                        self.logger.info('Running NeoPixel timer')
-                        self.logger.info("Memory free this loop %s MB" % hardware.getRAM())
-                        self.logger.info("CPU Usage this loop %s" % hardware.getCPUUse())
-                        self.logger.debug( "loop interval : %s" %(checkInterval))
+                    self.logger.info("checking heat levels")
+                    MaxInterface().checkHeat(input_queue)
+                    self.logger.info("Memory free this loop %s MB" % hardware.getRAM())
+                    self.logger.info("CPU Usage this loop %s" % hardware.getCPUUse())
+                    self.logger.debug( "loop interval : %s" %(checkInterval))
                 else:
                     MaxInterface().checkHeat(input_queue)
                     self.logger.info('Running Windows timer')
                 setStatusLights() 
-                
-                    
                 nextLoopCheck = loopStartTime + checkInterval
                 
             if not output_queue.empty():

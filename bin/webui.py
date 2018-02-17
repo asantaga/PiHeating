@@ -564,7 +564,7 @@ class CreateUIPage():
             heatIsOn = 'btn-info btn-md" style="font-size: {}vw;">Heating is OFF '.format(
                 baseFontSize - buttonSize)
 
-        print "Cube xstate {}".format(cube_state)
+        print "Cube state {}".format(cube_state)
         if cube_state == 1:
             cubeIsOn = 'btn-success btn-md" style="font-size: {}vw;">Cube{} '.format(
                 baseFontSize - buttonSize, active_cube)

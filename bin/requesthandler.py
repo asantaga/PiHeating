@@ -8,6 +8,8 @@ from webui import CreateUIPage
 from graphing import MakeGraph
 from variables import Variables
 from sendmessage import SendMessage
+import json
+import hardware
 
 # from heatinggpio import buttonCheckHeat, flashCube
 from max import MaxInterface
@@ -43,12 +45,20 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         if self.path[0:7] == '/status':
             from database import DbUtils
             DB=DbUtils() 
-            heatingState=DB.getBoiler()[2]
-            statusResponse="{{\"boilerStatus\":\"{}\"}}".format(heatingState)
+            checkInterval,cubeStatus=Variables().readVariables(['Interval','CubeOK'])
+
+
+            statusResponse = {}
+            statusResponse['boilerStatus']=DB.getBoiler()[2]
+            statusResponse['ram']=hardware.getRAM()
+            statusResponse['cpu']=hardware.getCPUUse()
+            statusResponse['loopInterval']=checkInterval
+            statusResponse['cubeStatus']=cubeStatus
+
             self.send_response(200)
             self.send_header('Content-type',"application/json")
             self.end_headers()
-            self.wfile.write(statusResponse)
+            self.wfile.write(json.dumps(statusResponse))
 
         if self.path[0:8] == '/ecomode':
             roomData = self.path
@@ -58,6 +68,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #            if useNeoPixel:
 #                MaxInterface().checkHeat(self.input_queue)
 #            else:
+
 #                buttonCheckHeat("requesthandler.ecomode")
             
         if self.path[0:9] == '/automode':
