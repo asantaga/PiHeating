@@ -2,7 +2,7 @@ from sys import platform as _platform
 if _platform == "linux" or _platform == "linux2":
     import RPi.GPIO as GPIO
 import logging
-import threading
+#import threading
 from variables import Variables
 from database import DbUtils
 # from max import MaxInterface
@@ -17,8 +17,6 @@ H_ON  = 17      # Heat On LED
 H_OFF = 18      # Heat Off LED      ANGELOUNUSED
 C_OK  = 22      # Cube OK LED       ANGELOUNUSED
 C_ERR = 23      # Cube Error LED    ANGELOUNUSED
-V_OK  = 24      # Vera Ok LED       ANGELOUNUSED
-V_ERR = 25      # Vera Error LED    ANGELOUNUSED
 HBEAT = 27      # HEARTBEAT LED
 ON_OFF = 05     # Boiler ON/Off button  ANGELOUNUSED
 CHECKH = 06     # Manual Valve check button ANGELOUNUSED
@@ -27,54 +25,58 @@ REBOOT   = 11   # Reboot RPi button
 BOILER_SW= 07   # Boiler relay switch output
 
 
-class HeartbeatThread(object):
+V_OK  = 24      # Vera Ok LED       ANGELOUNUSED
+V_ERR = 25      # Vera Error LED    ANGELOUNUSED
+
+class Heatinggpio(object):
     """
     Runs the heartbeat thread
     """
-    def __init__(self, beat_time):
-        self.beat_time = beat_time
-        self.logger = logging.getLogger("main.heatinggpio.heartbeatthread")
-        self.logger.debug("Heartbeat Thread initialised")
-        
-        thread = threading.Thread(target=self.run, args=())
-        #thread.daemon = True
-        thread.start()
-        thread.join(self.beat_time + 2)
-        # Set GPIO Mode
+    def __init__(self):
+#    def __init__(self, beat_time):
+#        self.beat_time = beat_time
+#        self.logger = logging.getLogger("main.heatinggpio.heartbeatthread")
+#        self.logger.debug("Heartbeat Thread initialised")
+#        
+#        thread = threading.Thread(target=self.run, args=())
+#        #thread.daemon = True
+#        thread.start()
+#        thread.join(self.beat_time + 2)
+#       # Set GPIO Mode
         GPIO.setmode(GPIO.BCM)
-
-    def run(self):
+#
+#    def run(self):
         self.logger.info("starting heart beat for %s" % self.beat_time)
-        # Set Cube Lights
-        heart = GPIO.PWM(27, 100)
-        pause_time = 0.02
-        startTime = time.time()
-        endTime = startTime + self.beat_time
-        heart.start(0)
-        while startTime < endTime:
-            for i in range(0,101):      # 101 because it stops when it finishes 100  
-                heart.ChangeDutyCycle(i)  
-                time.sleep(pause_time)  
-            for i in range(100,-1,-1):      # from 100 to zero in steps of -1  
-                heart.ChangeDutyCycle(i)  
-                time.sleep(pause_time)
-            startTime = time.time()
-
-        heart.stop()
-        GPIO.output(B_OFF,GPIO.LOW)
-        GPIO.output(H_ON,GPIO.LOW)
-        GPIO.output(H_OFF,GPIO.LOW)
-        GPIO.output(C_OK,GPIO.LOW)
-        GPIO.output(C_ERR,GPIO.LOW)
-        GPIO.output(V_OK,GPIO.LOW)
-        GPIO.output(V_ERR,GPIO.LOW)
-        GPIO.output(HBEAT,GPIO.LOW)
-        self.logger.debug("heartbeat thread ended")
-        
+#        # Set Cube Lights
+#        heart = GPIO.PWM(27, 100)
+#        pause_time = 0.02
+#        startTime = time.time()
+#        endTime = startTime + self.beat_time
+#        heart.start(0)
+#        while startTime < endTime:
+#            for i in range(0,101): # 101 because it stops when it finishes 100  
+#                heart.ChangeDutyCycle(i)  
+#                time.sleep(pause_time)  
+#            for i in range(100,-1,-1):      # from 100 to zero in steps of -1  
+#                heart.ChangeDutyCycle(i)  
+#                time.sleep(pause_time)
+#            startTime = time.time()
+#
+#        heart.stop()
+#        GPIO.output(B_OFF,GPIO.LOW)
+#        GPIO.output(H_ON,GPIO.LOW)
+#        GPIO.output(H_OFF,GPIO.LOW)
+#        GPIO.output(C_OK,GPIO.LOW)
+#        GPIO.output(C_ERR,GPIO.LOW)
+#        GPIO.output(V_OK,GPIO.LOW)
+#        GPIO.output(V_ERR,GPIO.LOW)
+#        GPIO.output(HBEAT,GPIO.LOW)
+#        self.logger.debug("heartbeat thread ended")
+#        
 def hBeat(beat_time):
     module_logger.info("starting heart beat for %s" % beat_time)
     # Set Cube Lights
-    heart = GPIO.PWM(27, 100)
+    heart = GPIO.PWM(HBEAT, 100)
     pause_time = 0.02
     startTime = time.time()
     endTime = startTime + beat_time
@@ -89,14 +91,6 @@ def hBeat(beat_time):
         startTime = time.time()
 
     heart.stop()
-#    GPIO.output(B_OFF,GPIO.LOW)
-#    GPIO.output(H_ON,GPIO.LOW)
-#    GPIO.output(H_OFF,GPIO.LOW)
-#    GPIO.output(C_OK,GPIO.LOW)
-#    GPIO.output(C_ERR,GPIO.LOW)
-#    GPIO.output(V_OK,GPIO.LOW)
-#    GPIO.output(V_ERR,GPIO.LOW)
-#    GPIO.output(HBEAT,GPIO.LOW)
     module_logger.debug("heartbeat ended")
     
 
@@ -120,12 +114,12 @@ def setupGPIO(input_queue):
         GPIO.setup(BOILER_SW,GPIO.OUT) # Boiler Switch
         GPIO.setup(ON_OFF,GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Disable Heat Button
         GPIO.setup(CHECKH,GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Check Heat
-        GPIO.setup(SHUTDOWN,GPIO.IN, pull_up_down=GPIO.PUD_UP)  # 
+        #GPIO.setup(SHUTDOWN,GPIO.IN, pull_up_down=GPIO.PUD_UP)  # 
         GPIO.setup(REBOOT,GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Reboot Raspberry Pi
               
         GPIO.add_event_detect(ON_OFF,GPIO.FALLING, callback=buttonDisableBoiler, bouncetime=500)# 05
         GPIO.add_event_detect(CHECKH,GPIO.FALLING, callback=buttonCheckHeat, bouncetime=500)    # 06
-        GPIO.add_event_detect(SHUTDOWN,GPIO.FALLING, callback=buttonShutdown, bouncetime=500)     # 12
+        #GPIO.add_event_detect(SHUTDOWN,GPIO.FALLING, callback=buttonShutdown, bouncetime=500)     # 12
         GPIO.add_event_detect(REBOOT,GPIO.FALLING, callback=buttonReboot, bouncetime=500)       # 13
     
 
@@ -148,7 +142,6 @@ def buttonDisableBoiler(channel):
     
 def buttonCheckHeat(channel):
     module_logger.info('Button check heat pressed, channel %s' % channel)
-    
     GPIO.output(B_OFF,GPIO.LOW)
     GPIO.output(H_ON,GPIO.LOW)
     GPIO.output(H_OFF,GPIO.LOW)
@@ -208,6 +201,7 @@ def buttonReboot(channel):
     
     
 
+# TODO Remove shutdowna, never want someone pressing this button :)
 def buttonShutdown(channel):
     module_logger.info('Button Shutdown pressed, channel %s' % channel)
     buttonPressTimer = 0
@@ -239,16 +233,16 @@ def buttonShutdown(channel):
             break
         time.sleep(1)
         
-def flashCube():
-    t1 = threading.Thread(target=flashLedThread(C_ERR, 2, 5, 50))
-    t1.start()
-    t1.join()
+#def flashCube():
+#   t1 = threading.Thread(target=flashLedThread(C_ERR, 2, 5, 50))
+#   t1.start()
+#   t1.join()
                 
-def flashLedThread(channel, flashTime, frequencie, brightness):
-    ledFlash = GPIO.PWM(channel, frequencie)
-    ledFlash.start(brightness)
-    time.sleep(flashTime)
-    ledFlash.stop()
+#def flashLedThread(channel, flashTime, frequencie, brightness):
+#    ledFlash = GPIO.PWM(channel, frequencie)
+#   ledFlash.start(brightness)
+#   time.sleep(flashTime)
+#   ledFlash.stop()
     
 def relayHeating(status):
     module_logger.info('Manual Heating switch, status %s' % status)
@@ -259,7 +253,7 @@ def relayHeating(status):
         
 def setStatusLights():
     module_logger.info("setting status lights")
-    cube_state, vera_state, boiler_enabled, local_relay = Variables().readVariables(['CubeOK', 'VeraOK', 'BoilerEnabled', 'ManualHeatingSwitch'])
+    cube_state, boiler_enabled, local_relay = Variables().readVariables(['CubeOK',  'BoilerEnabled', 'ManualHeatingSwitch'])
     heating_state = DbUtils().getBoiler()[2]
     if cube_state:
         GPIO.output(C_OK,GPIO.HIGH)
@@ -268,14 +262,15 @@ def setStatusLights():
         GPIO.output(C_OK,GPIO.LOW)
         GPIO.output(C_ERR,GPIO.HIGH)
         
-    # Set Vera Lights
-    if vera_state:
-        GPIO.output(V_OK,GPIO.HIGH)
-        GPIO.output(V_ERR,GPIO.LOW)
-    else:
-        GPIO.output(V_OK,GPIO.LOW)
-        GPIO.output(V_ERR,GPIO.HIGH)
-        
+# TODO Remove Vera stuff
+#    # Set Vera Lights
+#    if vera_state:
+#        GPIO.output(V_OK,GPIO.HIGH)
+#        GPIO.output(V_ERR,GPIO.LOW)
+#    else:
+#        GPIO.output(V_OK,GPIO.LOW)
+#        GPIO.output(V_ERR,GPIO.HIGH)
+#        
     # Set Heating State
     if heating_state:
         # Heat required

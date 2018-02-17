@@ -9,7 +9,7 @@ test change
 '''
 from __future__ import division
 
-__updated__ = "2016-07-31"
+__updated__ = "2018-02-17"
 
 import logging
 from logging.handlers import RotatingFileHandler
@@ -55,7 +55,7 @@ class Main():
     def __init__(self):
         #Initialise the Logger
         logLevel = Variables().readVariables(['LoggingLevel']).rstrip('\r')
-        useNeoPixel = Variables().readVariables(['UseNeoPixel'])
+        #useNeoPixel = Variables().readVariables(['UseNeoPixel'])
         self.logger = logging.getLogger("main")
         level = logging.getLevelName("DEBUG")
         self.logger.setLevel(logging.INFO)

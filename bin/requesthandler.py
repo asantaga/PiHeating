@@ -11,7 +11,7 @@ from sendmessage import SendMessage
 import json
 import hardware
 
-# from heatinggpio import buttonCheckHeat, flashCube
+from heatinggpio import buttonCheckHeat
 from max import MaxInterface
 VAR = Variables()
 CUI = CreateUIPage()
@@ -46,8 +46,6 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             from database import DbUtils
             DB=DbUtils() 
             checkInterval,cubeStatus=Variables().readVariables(['Interval','CubeOK'])
-
-
             statusResponse = {}
             statusResponse['boilerStatus']=DB.getBoiler()[2]
             statusResponse['ram']=hardware.getRAM()
@@ -68,8 +66,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #            if useNeoPixel:
 #                MaxInterface().checkHeat(self.input_queue)
 #            else:
-
-#                buttonCheckHeat("requesthandler.ecomode")
+            buttonCheckHeat("requesthandler.ecomode")
             
         if self.path[0:9] == '/automode':
             roomData = self.path
@@ -79,7 +76,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #            if useNeoPixel:
 #                MaxInterface().checkHeat(self.input_queue)
 #            else:
-#                buttonCheckHeat("requesthandler.automode")
+            buttonCheckHeat("requesthandler.automode")
 
         if self.path[0:11] == '/rangegraph':
             print 'going to create rangeGraph page'
@@ -90,7 +87,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #            if useNeoPixel:
 #                MaxInterface().checkHeat(self.input_queue)
 #            else:
-#                buttonCheckHeat("requesthandler.heatcheck")
+            buttonCheckHeat("requesthandler.heatcheck")
             self.path="/index.html"
 
         if self.path[0:5] == '/mode':
@@ -103,7 +100,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #            if useNeoPixel:
 #                MaxInterface().checkHeat(self.input_queue)
 #            else:
-#                buttonCheckHeat("requesthandler.mode")
+            buttonCheckHeat("requesthandler.mode")
 
         if self.path[0:6] == '/graph':
             roomName = self.path
@@ -116,7 +113,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #            if useNeoPixel:
 #                MaxInterface().checkHeat(self.input_queue)
 #            else:
-#               buttonCheckHeat("requesthandler.Boiler-disable")
+            buttonCheckHeat("requesthandler.Boiler-disable")
 
         if self.path == '/?confirm=1&boilerswitch=Boiler+Disabled':
             VAR.writeVariable([['BoilerEnabled', 1]])
@@ -124,22 +121,22 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #            if useNeoPixel:
 #                MaxInterface().checkHeat(self.input_queue)
 #            else:
-#                buttonCheckHeat("requesthandler.boiler-enable")
+            buttonCheckHeat("requesthandler.boiler-enable")
 
         elif self.path =="/admin":
             roomTemps = CUI.createRooms()
             self.path = "/admin.html"
             self.updateUIPages(roomTemps)
 
-        elif self.path == "/shutdown":
-            if _platform == "linux" or _platform == "linux2":
-                print 'In Linux so shutting down'
-                self.path = "/shutdown.html"
-                system("sudo shutdown -h now")
-            elif _platform == "win32":
-                print 'In Windows, Not shutting down'
-                self.path = "/admin.html"
-                
+#        elif self.path == "/shutdown":
+#            if _platform == "linux" or _platform == "linux2":
+#                print 'In Linux so shutting down'
+#                self.path = "/shutdown.html"
+#                system("sudo shutdown -h now")
+#            elif _platform == "win32":
+#                print 'In Windows, Not shutting down'
+#                self.path = "/admin.html"
+#                
         elif self.path == "/reboot":
             if _platform == "linux" or _platform == "linux2":
                 print 'In Linux so rebooting'
@@ -149,25 +146,25 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 print 'In Windows, Not rebooting'
                 self.path = "/admin.html"
                 
-        elif self.path == "/killpython":
-            if _platform == "linux" or _platform == "linux2":
-                print 'In Linux so killing Python'
-                self.path = "/shutdown.html"
-                system("sudo pkill python")
-            elif _platform == "win32":
-                print 'In Windows, Not stopping python'
-                self.path = "/admin.html"
+#        elif self.path == "/killpython":
+#            if _platform == "linux" or _platform == "linux2":
+#                print 'In Linux so killing Python'
+#                self.path = "/shutdown.html"
+#                system("sudo pkill python")
+#            elif _platform == "win32":
+#                print 'In Windows, Not stopping python'
+#                self.path = "/admin.html"
                 
-        elif self.path == "/Restartpython":
-            if _platform == "linux" or _platform == "linux2":
-                print 'In Linux so killing Python'
-                self.path = "/admin.html"
-                #system("sudo pkill python")
-                self.restart_program()
-            elif _platform == "win32":
-                print 'In Windows, Not stopping python'
-                self.path = "/admin.html"
-        
+#        elif self.path == "/Restartpython":
+#            if _platform == "linux" or _platform == "linux2":
+#                print 'In Linux so killing Python'
+#                self.path = "/admin.html"
+#                #system("sudo pkill python")
+#                self.restart_program()
+#            elif _platform == "win32":
+#                print 'In Windows, Not stopping python'
+#                self.path = "/admin.html"
+#        
 
         try:
             #Check the file extension required and

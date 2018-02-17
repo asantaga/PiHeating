@@ -24,7 +24,7 @@ MultiRadCount,2
 AllValveTotal,120
 WeatherKey,713951e4ce665b2d2d5d1b7a10b88f63
 WeatherCityID,2650567
-WeatherWidget,http://forecast.io/embed/#lat=51.5127&lon=-0.3052&units=UK&name=Ealing,UK
+WeatherWidget,http://forecast.io/embed/#lat=51.5127&lon=-0.3052&units=UK&name=Ealing
 BaseFontSize,3
 LoggingLevel,logging.DEBUG
 ManualHeatingSwitch,1

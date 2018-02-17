@@ -2,12 +2,12 @@ import time
 
 from database import DbUtils
 from variables import Variables
-from veratemps import VeraVirtualTemps
+#from veratemps import VeraVirtualTemps
 import logging
 
 DB = DbUtils()
 VAR = Variables()
-VT = VeraVirtualTemps()
+#VT = VeraVirtualTemps()
 
 
 class CreateUIPage():
@@ -432,9 +432,9 @@ class CreateUIPage():
         return html_text
 
     def roomTable(self, roomTemps):
-        sendVeraVirtualTemps, veraRooms = VAR.readVariables(
-            ['VeraVirtualTemps', 'VeraVirtualRooms'])
-        veraRoomsDict = VT.veraRoomDict(veraRooms)
+#        sendVeraVirtualTemps, veraRooms = VAR.readVariables(
+#            ['VeraVirtualTemps', 'VeraVirtualRooms'])
+#        veraRoomsDict = VT.veraRoomDict(veraRooms)
 
         baseFontSize = float(VAR.readVariables(['BaseFontSize']))
         pageText = []
@@ -463,9 +463,9 @@ class CreateUIPage():
             roomMode = rooms[5]
             roomModes = ['AUTO', 'MANUAL', 'ECO', 'BOOST', 'VACATION']
 
-            if sendVeraVirtualTemps:
-                if veraRoomsDict.has_key(roomText):
-                    VT.veraSendTemp(veraRoomsDict[roomText], truTemp)
+            #if sendVeraVirtualTemps:
+            #    if veraRoomsDict.has_key(roomText):
+            #        VT.veraSendTemp(veraRoomsDict[roomText], truTemp)
 
             if valvePos > 60:      # how far valve is open
                 cold_text = 'btn-info'
@@ -542,12 +542,7 @@ class CreateUIPage():
             heating_state = 0
         duty_cycle = DB.getCubes()[3]
 
-        boiler_state, cube_state, active_cube, vera_state, baseFontSize, roomsCorrect = VAR.readVariables(['BoilerEnabled',
-                                                                                                           'CubeOK',
-                                                                                                           'ActiveCube',
-                                                                                                           'VeraOK',
-                                                                                                           'BaseFontSize',
-                                                                                                           'RoomsCorrect'])
+        boiler_state, cube_state, active_cube,  baseFontSize, roomsCorrect = VAR.readVariables(['BoilerEnabled', 'CubeOK', 'ActiveCube',  'BaseFontSize', 'RoomsCorrect'])
         heating_cycle = self.dutyCycle(86400)
 
         if boiler_state:
@@ -575,10 +570,10 @@ class CreateUIPage():
             cubeIsOn = 'btn-danger btn-md" style="font-size: {}vw;">Cube{} '.format(
                 baseFontSize - buttonSize, active_cube)
 
-        if vera_state:
-            veraIsOn = '<button type="button" class="btn-warning btn-md" style="font-size: {}vw;">Vera</button>'.format( baseFontSize - buttonSize)
-        else:
-            veraIsOn = ''
+#        if vera_state:
+#            veraIsOn = '<button type="button" class="btn-warning btn-md" style="font-size: {}vw;">Vera</button>'.format( baseFontSize - buttonSize)
+#        else:
+#            veraIsOn = ''
 
         html_text = """
     <div class="container-fluid bg-2 text-center">
@@ -588,13 +583,13 @@ class CreateUIPage():
         <input type="hidden" name="confirm" value="1" />
         <div class="btn-group">
             <input type="submit" class="btn {0}
-            <a href="/heatcheck" class="btn {1}<span class="badge" style="font-size: {6}vw;">{2}%</span></a>
-            <button type="button" class="btn {3}<span class="badge" style="font-size: {6}vw;">{4}</span></button>
-            {5}
+            <a href="/heatcheck" class="btn {1}<span class="badge" style="font-size: {5}vw;">{2}%</span></a>
+            <button type="button" class="btn {3}<span class="badge" style="font-size: {5}vw;">{4}</span></button>
+            
         </form>
         </div>
     </div>
-          """.format(boilerIsOn, heatIsOn, heating_cycle, cubeIsOn, duty_cycle, veraIsOn, baseFontSize - 1.8)
+          """.format(boilerIsOn, heatIsOn, heating_cycle, cubeIsOn, duty_cycle,  baseFontSize - 1.8)
         return html_text
 
     def variablesPage(self):

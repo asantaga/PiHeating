@@ -14,7 +14,7 @@ import json
 import requests
 
 import multiprocessing
-import neopixelserial
+# import neopixelserial
 #from time import sleep
 
 maxDetails = {}
@@ -38,16 +38,16 @@ class MaxInterface():
     #         if useNeoPixel:
     #             self.initialiseNeoPixel()
 
-    def initialiseNeoPixel(self):
-        logger = logging.getLogger("main.max.initialiseNeoPixel")
-        logger.info("Initialising NeoPixel Serial connection")
-        self.input_queue = multiprocessing.Queue()
-        self.output_queue = multiprocessing.Queue()
-        self.arduino = neopixelserial.SerialProcess(
-            self.input_queue, self.output_queue)
-        self.arduino.daemon = True
-        self.arduino.start()
-        logger.info(self.arduino)
+#    def initialiseNeoPixel(self):
+#        logger = logging.getLogger("main.max.initialiseNeoPixel")
+#        logger.info("Initialising NeoPixel Serial connection")
+#        self.input_queue = multiprocessing.Queue()
+#        self.output_queue = multiprocessing.Queue()
+#        self.arduino = neopixelserial.SerialProcess(
+#            self.input_queue, self.output_queue)
+#        self.arduino.daemon = True
+#        self.arduino.start()
+#        logger.info(self.arduino)
 
     def checkHeat(self, input_queue):
         useNeoPixel = Variables().readVariables(['UseNeoPixel'])
@@ -66,7 +66,7 @@ class MaxInterface():
 
         logger = logging.getLogger("main.max.setNeoPixel")
         logger.info("Setting NeoPixel Lights")
-        cube_state, vera_state, boiler_enabled, interval, boiler_override, rooms_Ok = Variables().readVariables(['CubeOK',
+        cube_state, boiler_enabled, interval, boiler_override, rooms_Ok = Variables().readVariables(['CubeOK',
                                                                                                                  'VeraOK',
                                                                                                                  'BoilerEnabled',
                                                                                                                  'Interval',
@@ -83,7 +83,6 @@ class MaxInterface():
                                                       interval,
                                                       boiler_enabled,
                                                       cube_state,
-                                                      vera_state,
                                                       boiler_override,
                                                       light_arg)
 
@@ -470,19 +469,7 @@ class MaxInterface():
     def switchHeat(self):
         module_logger.info("main.max.switchHeat running")
         logTime = time.time()
-        boilerEnabled, veraControl, Vera_Address, Vera_Port, \
-            Vera_Device, singleRadThreshold, multiRadThreshold, \
-            multiRadCount, AllValveTotal, ManualHeatingSwitch, boilerOverride = Variables().readVariables(['BoilerEnabled',
-                                                                                                           'VeraControl',
-                                                                                                           'VeraIP',
-                                                                                                           'VeraPort',
-                                                                                                           'VeraDevice',
-                                                                                                           'SingleRadThreshold',
-                                                                                                           'MultiRadThreshold',
-                                                                                                           'MultiRadCount',
-                                                                                                           'AllValveTotal',
-                                                                                                           'ManualHeatingSwitch',
-                                                                                                           'BoilerOverride'])
+        boilerEnabled, singleRadThreshold, multiRadThreshold,  multiRadCount, AllValveTotal, ManualHeatingSwitch, boilerOverride = Variables().readVariables(['BoilerEnabled', 'SingleRadThreshold', 'MultiRadThreshold', 'MultiRadCount', 'AllValveTotal', 'ManualHeatingSwitch', 'BoilerOverride'])
 
         roomTemps = CreateUIPage().createRooms()
         outsideTemp = self.getCurrentOutsidetemp()
@@ -528,16 +515,16 @@ class MaxInterface():
         # Control Boiler
         #todo : Put if/else around veracontrol
         if boilerEnabled:
-            try:
-                _ = requests.get(veraControl.format(Vera_Address, Vera_Port,
-                                                    Vera_Device, str(boilerState)), timeout=5)
-
-                Variables().writeVariable([['VeraOK', 1]])
-                module_logger.info('message sent to Vera')
-
-            except:
-                Variables().writeVariable([['VeraOK', 0]])
-                module_logger.info("vera is unreachable")
+#            try:
+#                _ = requests.get(veraControl.format(Vera_Address, Vera_Port,
+#                                                    Vera_Device, str(boilerState)), timeout=5)
+#
+#                Variables().writeVariable([['VeraOK', 1]])
+#                module_logger.info('message sent to Vera')
+#
+#            except:
+#                Variables().writeVariable([['VeraOK', 0]])
+#                module_logger.info("vera is unreachable")
 
             # Set Manual Boiler Switch if enabled
             if ManualHeatingSwitch:
@@ -546,16 +533,16 @@ class MaxInterface():
         else:
             boilerState = 0
 
-            try:
-                _ = requests.get(veraControl.format(Vera_Address, Vera_Port,
-                                                    Vera_Device, boilerState), timeout=5)
-
-                Variables().writeVariable([['VeraOK', 1]])
-                module_logger.info("Boiler is Disabled")
-            except:
-                Variables().writeVariable([['VeraOK', 0]])
-                module_logger.info("vera is unreachable")
-
+#            try:
+#                _ = requests.get(veraControl.format(Vera_Address, Vera_Port,
+#                                                    Vera_Device, boilerState), timeout=5)
+#
+#                Variables().writeVariable([['VeraOK', 1]])
+#                module_logger.info("Boiler is Disabled")
+#            except:
+#                Variables().writeVariable([['VeraOK', 0]])
+#                module_logger.info("vera is unreachable")
+#
             # Set Manual Boiler Switch if enabled
             if ManualHeatingSwitch:
                 module_logger.info("Switching local Relay %s" %boilerState)
