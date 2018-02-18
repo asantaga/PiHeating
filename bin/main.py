@@ -44,9 +44,9 @@ def mainCheckHeat(self):
 
 class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
     """Handle requests is separate thread"""
-    def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True,
-                 queue=None):
+    def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True, queue=None):
         self.queue = queue
+        print "ThreadingServerStarted"
         HTTPServer.__init__(self, server_address, RequestHandlerClass,
                            bind_and_activate=bind_and_activate)
         
@@ -191,6 +191,3 @@ class Main():
 
 if __name__=='__main__':
     Main()
-
-        
-    
