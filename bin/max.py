@@ -14,8 +14,6 @@ import json
 import requests
 
 import multiprocessing
-# import neopixelserial
-#from time import sleep
 
 maxDetails = {}
 rooms = {}
@@ -33,61 +31,13 @@ module_logger = logging.getLogger("main.max")
 
 class MaxInterface():
 
-    #     def __init__(self):
-    #         useNeoPixel = Variables().readVariables(['UseNeoPixel'])
-    #         if useNeoPixel:
-    #             self.initialiseNeoPixel()
-
-#    def initialiseNeoPixel(self):
-#        logger = logging.getLogger("main.max.initialiseNeoPixel")
-#        logger.info("Initialising NeoPixel Serial connection")
-#        self.input_queue = multiprocessing.Queue()
-#        self.output_queue = multiprocessing.Queue()
-#        self.arduino = neopixelserial.SerialProcess(
-#            self.input_queue, self.output_queue)
-#        self.arduino.daemon = True
-#        self.arduino.start()
-#        logger.info(self.arduino)
-
     def checkHeat(self, input_queue):
         useNeoPixel = Variables().readVariables(['UseNeoPixel'])
         MAXData, validData = self.getData()
         if validData:
             self.parseData(MAXData)
             self.switchHeat()
-        if useNeoPixel:
-            self.setNeoPixel(1, input_queue)
 
-    def setNeoPixel(self, doChase, input_queue, *args):
-        light_arg = 0
-        if args is not None:
-            for arg in args:
-                light_arg = arg
-
-        logger = logging.getLogger("main.max.setNeoPixel")
-        logger.info("Setting NeoPixel Lights")
-        cube_state, boiler_enabled, interval, boiler_override, rooms_Ok = Variables().readVariables(['CubeOK',
-                                                                                                                 'VeraOK',
-                                                                                                                 'BoilerEnabled',
-                                                                                                                 'Interval',
-                                                                                                                 'BoilerOverride',
-                                                                                                                 'RoomsCorrect'])
-        heating_state = DbUtils().getBoiler()[2]
-
-        # overide CubeState if rooms wrong
-        if not rooms_Ok:
-            cube_state = 2
-
-        sendString = '%s,%s,%s,%s,%s,%s,%s,%s\n\r' % (doChase,
-                                                      heating_state,
-                                                      interval,
-                                                      boiler_enabled,
-                                                      cube_state,
-                                                      boiler_override,
-                                                      light_arg)
-
-        logger.info("Sending NeoPixel %s" % sendString)
-        input_queue.put(sendString)
 
     def createSocket(self):
         logger = logging.getLogger("main.max.createSocket")
@@ -414,10 +364,6 @@ class MaxInterface():
         """
         Get Current outside temperature from OpenWeatherMap using the API
 
-        http://192.168.0.13:3480/data_request?id=status&output_format=xml&DeviceNum=113
-        http://192.168.0.13:3480/data_request?id=variableget&DeviceNum=112&serviceId=urn:upnp-org:serviceId:TemperatureSensor1&Variable=CurrentTemperature
-        http://192.168.0.13:3480/data_request?id=variableset&DeviceNum=103&serviceId=urn:upnp-org:serviceId:TemperatureSensor1&Variable=CurrentTemperature&Value=11.4
-        VeraGetData,http://{}:{}/data_request?id=variableget&DeviceNum={}&serviceId={}&Variable={}
         """
         logger = logging.getLogger("main.max.getCurrentOutsidetemp")
         Vera_Address, Vera_Port, VeraGetData, VeraOutsideTempID, VeraOutsideTempService, VeraTemp = Variables().readVariables(['VeraIP',
@@ -426,31 +372,31 @@ class MaxInterface():
                                                                                                                                'VeraOutsideTempID',
                                                                                                                                'VeraOutsideTempService',
                                                                                                                                'VeraTemp'])
-        if VeraTemp:
-            try:
-                f = urllib2.urlopen(VeraGetData.format(Vera_Address, Vera_Port,
-                                                       VeraOutsideTempID,
-                                                       VeraOutsideTempService,
-                                                       'CurrentTemperature'))
-                temp_c = f.read()
-
-                t = urllib2.urlopen("http://{}:{}/data_request?id=status&output_format=xml&DeviceNum={}".format(Vera_Address,
-                                                                                                                Vera_Port,
-                                                                                                                VeraOutsideTempID))
-                t_xml = t.read()
-                time_index = int(t_xml.find("LastUpdate")) + 19
-                update_time = int(t_xml[time_index:(time_index + 10)])
-
-                current_time = time.time()
-                if current_time - update_time <= (15 * 60):
-                    logger.info('Vera Outside Temperature is %s' % temp_c)
-                    return temp_c
-                else:
-                    logger.info('Vera Outside Temperature out of date')
-
-            except Exception, err:
-                logger.exception("No Vera temp data %s" % err)
-
+#        if VeraTemp:
+#            try:
+#                f = urllib2.urlopen(VeraGetData.format(Vera_Address, Vera_Port,
+#                                                       VeraOutsideTempID,
+#                                                       VeraOutsideTempService,
+#                                                       'CurrentTemperature'))
+#                temp_c = f.read()
+#
+#                t = urllib2.urlopen("http://{}:{}/data_request?id=status&output_format=xml&DeviceNum={}".format(Vera_Address,
+#                                                                                                                Vera_Port,
+#                                                                                                                VeraOutsideTempID))
+#                t_xml = t.read()
+#                time_index = int(t_xml.find("LastUpdate")) + 19
+#                update_time = int(t_xml[time_index:(time_index + 10)])
+#
+#                current_time = time.time()
+#                if current_time - update_time <= (15 * 60):
+#                    logger.info('Vera Outside Temperature is %s' % temp_c)
+#                    return temp_c
+#                else:
+#                    logger.info('Vera Outside Temperature out of date')
+#
+#            except Exception, err:
+#                logger.exception("No Vera temp data %s" % err)
+#
         try:
             cityID, userKey = Variables().readVariables(
                 ['WeatherCityID', 'WeatherKey'])
@@ -533,16 +479,6 @@ class MaxInterface():
         else:
             boilerState = 0
 
-#            try:
-#                _ = requests.get(veraControl.format(Vera_Address, Vera_Port,
-#                                                    Vera_Device, boilerState), timeout=5)
-#
-#                Variables().writeVariable([['VeraOK', 1]])
-#                module_logger.info("Boiler is Disabled")
-#            except:
-#                Variables().writeVariable([['VeraOK', 0]])
-#                module_logger.info("vera is unreachable")
-#
             # Set Manual Boiler Switch if enabled
             if ManualHeatingSwitch:
                 module_logger.info("Switching local Relay %s" %boilerState)

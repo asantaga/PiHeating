@@ -16,7 +16,6 @@ from logging.handlers import RotatingFileHandler
 from database import DbUtils
 import threading
 import multiprocessing
-# import neopixelserial
 from SocketServer import ThreadingMixIn
 from BaseHTTPServer import HTTPServer
 from requesthandler import MyRequestHandler
@@ -26,7 +25,6 @@ from sys import platform as _platform
 from os import system
 import hardware
 import time
-#from max import checkHeat, initialiseNeoPixel
 from max import MaxInterface
 
 input_queue = multiprocessing.Queue()
@@ -80,14 +78,6 @@ class Main():
         
         
         
-        # Start Serial connection worker if using NeoPixel
-#        if useNeoPixel:
-#            self.arduino = neopixelserial.SerialProcess(input_queue, output_queue)
-#            self.arduino.daemon = True
-#            self.arduino.start()
-
-#        # Or start the GPIO
-#        else:
         setupGPIO(input_queue)
         
         # Start Web UI
@@ -118,63 +108,10 @@ class Main():
                 setStatusLights() 
                 nextLoopCheck = loopStartTime + checkInterval
                 
-            if not output_queue.empty():
-                serialData = output_queue.get().rstrip()
-                self.processSerial(serialData)
-
             hBeat(2)
             time.sleep(.2)
             
-    
             
-    def processSerial(self, data):
-        global reboot_Timer
-        global offTime
-        global shutdown_Timer
-        global shutOff_Timer
-        
-        self.logger.info("Processing Serial Data : %s" % data)
-        if data == "checkSW_ON":
-            MaxInterface().checkHeat(input_queue)
-        elif data == "boilerSW_ON":
-            boilerEnabled = Variables().readVariables(['BoilerEnabled'])
-            if boilerEnabled:
-                boilerEnabled = 0
-            else:
-                boilerEnabled = 1
-            Variables().writeVariable([['BoilerEnabled', boilerEnabled]])
-            MaxInterface().checkHeat(input_queue)
-            
-        elif data == "rebootSW_ON":
-            reboot_Timer = time.time()
-            MaxInterface().setNeoPixel(0, input_queue, 2)
-        elif data == "rebootSW_OFF":
-            offTime = time.time()
-            if offTime - reboot_Timer >= 3:
-                self.logger.info("Rebooting")
-                system("sudo reboot")
-                
-        elif data == "shutdownSW_ON":
-            shutdown_Timer = time.time()
-            MaxInterface().setNeoPixel(0, input_queue, 1)
-        elif data == "shutdownSW_OFF":
-            shutOff_Timer = time.time()
-            if shutOff_Timer - shutdown_Timer >= 3:
-                self.logger.info("Shutting Down Python")
-                system("sudo shutdown -h now")
-                
-        elif data == "overSW_ON":
-            boiler_override = Variables().readVariables(['BoilerOverride'])
-            boiler_override += 1
-            if boiler_override > 2:
-                boiler_override = 0
-            print boiler_override
-            Variables().writeVariable([['BoilerOverride', boiler_override]])
-            MaxInterface().setNeoPixel(0, input_queue, 0)
-
-            
-            
-    
     def startKioskServer(self):
         webIP, webPort = Variables().readVariables(['WebIP', 'WebPort'])
         self.logger.info("Web UI Starting on : %s %s" %( webIP, webPort))
