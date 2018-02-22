@@ -38,6 +38,9 @@ class MakeGraph():
         f.write(html_text)
         f.close()
 
+
+    def dutyCycle(self, interval):
+        logger = logging.getLogger("main.graphing.dutycycle")
     def dutyCycle(self, interval):
         logger = logging.getLogger("main.graphing.dutycycle")
         logger.info("Calculating duty cycle for {} seconds".format(interval))
@@ -120,7 +123,7 @@ class MakeGraph():
                     break
 
             timeString = (
-                datetime.datetime.fromtimestamp(float(tempTime)).strftime('%d %H:%M'))
+                datetime.datetime.fromtimestamp(float(tempTime)).strftime('%d -  %H:%M'))
             pageText.append("""['{0}', {1}, {2}, {3:.1f}, {4}, {5}],
             """.format(timeString, setPoint, realTemp, outsideTemp, boilerOn, valvePos))
         pageText.append("""]);
@@ -133,6 +136,7 @@ class MakeGraph():
         html_text = """
         var options = {{
             title : "Temperature of {}, Heating has been on {}% of the time",
+            hAxis : {{slantedText: true,slantedTextAngle:90}},
             seriesType: 'line',
             interpolateNulls: true,
             series: {{
