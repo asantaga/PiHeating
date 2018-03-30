@@ -58,23 +58,18 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(statusResponse))
 
         if self.path[0:8] == '/ecomode':
-            roomData = self.path
-            SendMessage().updateRoom(roomData)
+            #roomData = self.path
+            #SendMessage().updateRoom(roomData)
+            SendMessage().setHouseMode("eco")
             self.path="/index.html"
             time.sleep(1)
-#            if useNeoPixel:
-#                MaxInterface().checkHeat(self.input_queue)
-#            else:
             buttonCheckHeat("requesthandler.ecomode")
             
         if self.path[0:9] == '/automode':
             roomData = self.path
-            SendMessage().updateRoom(roomData)
+            SendMessage().setHouseMode("auto")
             self.path="/index.html"
             time.sleep(1)
-#            if useNeoPixel:
-#                MaxInterface().checkHeat(self.input_queue)
-#            else:
             buttonCheckHeat("requesthandler.automode")
 
         if self.path[0:11] == '/rangegraph':

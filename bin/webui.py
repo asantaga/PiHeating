@@ -421,29 +421,25 @@ class CreateUIPage():
                     {}
                 </div>
                 <div class="col-sm-10 child">
-                    <h2>Heating Status @ {} <span class="badge">{}xxx</span></h2>
+                    <h2>Heating Status @ {}</h2>
                 </div>
                 <div class="col-sm-1 child">
-                    <a href="/index.html" class="btn btn-primary" role="button">Refresh Page <span class="badge">{}</span></a>
+                    <a href="/index.html" class="btn btn-primary" role="button">Refresh Page </a>
                 </div>
             </div>
         </div>
-        <main id="content" role="main">""".format(buttonText, theTime, heat_Interval, webRefresh)
+        <main id="content" role="main">""".format(buttonText, theTime)
         return html_text
 
     def roomTable(self, roomTemps):
-#        sendVeraVirtualTemps, veraRooms = VAR.readVariables(
-#            ['VeraVirtualTemps', 'VeraVirtualRooms'])
-#        veraRoomsDict = VT.veraRoomDict(veraRooms)
-
         baseFontSize = float(VAR.readVariables(['BaseFontSize']))
         pageText = []
         pageText.append("""
             <div class="container-fluid bg-3">
             <div class="btn-group btn-group-justified">
                 <a href="#" class="btn btn-default btn-lg" style="font-size: {0}vw;"><B>HOUSE MODE</B></a>
-                <a href="/automode?auto?00?0" class="btn btn-default btn-lg" style="font-size: {0}vw;"><span class="glyphicon glyphicon-time"></span><B> AUTO</B></a>
-                <a href="/ecomode?eco?0?0" class="btn btn-default btn-lg" style="font-size: {0}vw;"><span class="glyphicon glyphicon-leaf"></span><B> ECO</B></a>
+                <a href="/automode" class="btn btn-default btn-lg" style="font-size: {0}vw;"><span class="glyphicon glyphicon-time"></span><B> AUTO</B></a>
+                <a href="/ecomode" class="btn btn-default btn-lg" style="font-size: {0}vw;"><span class="glyphicon glyphicon-leaf"></span><B> ECO</B></a>
                 <a href="#" class="btn btn-default btn-lg" style="font-size: {0}vw;"><span class="glyphicon glyphicon-asterisk"></span><B> COMFORT</B></a>
                 <a href="#" class="btn btn-default btn-lg" style="font-size: {0}vw;"><span class="glyphicon glyphicon-pencil"></span><B> CUSTOM</B></a>
             </div>

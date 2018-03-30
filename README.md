@@ -44,12 +44,20 @@ PIHeating provides a website for you to view, and potentially change, heating st
 
 ## REST API
 
-Only one api implemented. The /status api allows you to see the status of the boiler (1=On , 0=Off)
+The /status api allows you to see the status of the boiler (1=On , 0=Off)
 
-GET http://<raspberryPiIP>:4102/status
+GET http://<raspberryPiIP>:<port>/status
 ```json
 {'boilerStatus':'1'}
 ```
+
+Setting the house into ECO mode (based on the value in variables.txt)
+GET http://raspberryPiIP>:<port>/ecomode
+
+Setting the house into Auto mode (based on the value in variables.txt)
+GET http://raspberryPiIP>:<port>/automode
+
+
 
 ## Integration with Home Assistant
 

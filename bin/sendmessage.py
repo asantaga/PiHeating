@@ -2,6 +2,9 @@
 Created on 6 Dec 2015
 
 @author: steph
+
+Updated Mar 2018 Angelo Santagata
+
 '''
 
 #import requests
@@ -14,6 +17,7 @@ import time
 from variables import Variables
 from database import DbUtils
 from webui import CreateUIPage
+from max import MaxInterface
 
 VAR = Variables()
 
@@ -146,6 +150,35 @@ class SendMessage(object):
         self.logger.debug("MAX send message reply %s" % message)
         return message
     
+
+    def setHouseMode(self,houseMode):
+        self.logger = logging.getLogger("main.sendmessage.setHouseMode")
+        houseEcoTemp,logLevel = VAR.readVariables(['HouseEcoTemp','LoggingLevel'])
+        logging.basicConfig()
+        self.logger.setLevel(logging.DEBUG)
+        # Get List of Rooms and set the mode
+        roomList = DbUtils().getRooms()
+        self.logger.debug("roomList %s" % roomList)
+        
+        if houseMode!="auto" and houseMode!="eco":
+            self.logger.info("setHouseMode called with invalid parameter")
+            return -1
+
+        for rooms in roomList:
+            if houseMode=="eco":
+                # Set ECO temp. For simplicity we are just using the same value for the whole house
+                sCommand = self.s_Command(rooms[2], rooms[0], 'MANUAL', houseEcoTemp)
+                self.logger.debug("ECO sCommand %s" % sCommand)
+            else:
+                # Set Auto
+                sCommand = self.s_Command(rooms[2], rooms[0], 'AUTO', 0.0)
+                self.logger.debug("Auto  sCommand %s" % sCommand)
+            # Send Max Command
+            self.sendMAX(sCommand)
+            time.sleep(0.8)
+        self.logger.debug("All rooms set to ECO")
+
+
     
     def updateRoom(self, roomData):
         self.logger = logging.getLogger("main.sendmessage.updateRoom")

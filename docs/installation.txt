@@ -16,9 +16,8 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo rpi-update
 
-Enable Serial ttyAMA0 to GPIO14/15 on RPi3 if using the NeoPixel light ring.
-	disable bluetooth
-		sudo systemctl disable hciuart
+disable bluetooth
+	sudo systemctl disable hciuart
 	add dtoverlay=pi3-miniuart-bt to /boot/config.txt file
 
 start WinSCP
@@ -33,6 +32,7 @@ connect to RPi
 		change WeatherCityID to own city
 		change WeatherWidget to your location
 		If using local relay change ManualHeatingSwitch to 1
+		change HouseEcoTemp to the temperature you would like all your radiators to go to when the eco button is pressed
 	If heating.db file exists please delete. It should be created on first run, do not delete again.
 	
 start putty session from WinSCP
@@ -46,7 +46,7 @@ cd to heating folder
 	CTRL +C to stop
 	there should now be a new database file and some log files
 	sudo python main.py
-	on your PC you should be able to load web UI at http://RPi-IP:4102
+	on your PC you should be able to load web UI at http://RPi-IP
 	
 	
 Make it run automatically
@@ -58,5 +58,7 @@ Make it run automatically
 	press CTRL X to save
 	reboot to test
 		sudo reboot
+
+
 
 	

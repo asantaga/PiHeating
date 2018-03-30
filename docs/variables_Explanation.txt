@@ -40,3 +40,5 @@ Enable Vera virtual temperature updates.            VeraVirtualTemps,1
 MAX room name and Vera Device number to sync.       VeraVirtualRooms,{'Bedroom 2':103; 'Bedroom 1':135; 'Dining-Extension':139; 'Living Room':157}
 Vera command to update virtual temps.               VeraUpdateTemps,http://192.168.0.13:3480/data_request?id=variableset&DeviceNum={}&serviceId=urn:upnp-org:serviceId:TemperatureSensor1&Variable=CurrentTemperature&Value={}
     I had problems creating the command so got lazy and hard coded the address.
+
+HouseEcoTemp					    The temp to set when putting the house into eco mode

@@ -18,6 +18,7 @@ import multiprocessing
 maxDetails = {}
 rooms = {}
 devices = {}
+devices_eco_temps = {}
 valves = {}
 valveList = []
 message = ""
@@ -41,6 +42,7 @@ class MaxInterface():
 
     def createSocket(self):
         logger = logging.getLogger("main.max.createSocket")
+        logger.setLevel(logging.DEBUG)
         # Create Socket
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -158,6 +160,9 @@ class MaxInterface():
             print "devices"
             for keys in devices:
                 print keys, devices[keys]
+            print "Eco Temperatures" 
+            for keys in devices_eco_temps:
+                print keys,devices_eco_temps[keys]
             print "valves"
             for keys in valves:
                 print keys, valves[keys]
@@ -168,6 +173,7 @@ class MaxInterface():
 
     def maxCmd_H(self, line):
         """ process H response """
+        print "Data from Max_Cmd_H"
         line = line.split(',')
         serialNumber = line[0][2:]
         rfChannel = line[1]
@@ -182,14 +188,19 @@ class MaxInterface():
 
     def maxCmd_C(self, line):
         """ process C response """
+        print "Data from Max_Cmd_C"
         line = line.split(",")
         es = base64.b64decode(line[1])
         if ord(es[0x04]) == 1:
+            print "adding device"
             dev_adr = self.hexify(es[0x01:0x04])
             devices[dev_adr][8] = es[0x16]
+            # Store the Eco Temp in the devices_eco_temp array
+            devices_eco_temps[dev_adr]=ord(es[0x13])/2
 
     def maxCmd_M(self, line, refresh):
         """ process M response Rooms and Devices"""
+        print "Data from Max_Cmd_M"
         logger = logging.getLogger("main.max.maxCmd_M")
         expectedRoomNo = int(Variables().readVariables(['ExpectedNoOfRooms']))
         line = line.split(",")
@@ -260,6 +271,7 @@ class MaxInterface():
 
     def maxCmd_L(self, line):
         """ process L response """
+        print "Data from Max_Cmd_L"
         line = line.split(":")
         # print line
         es = base64.b64decode(line[1])

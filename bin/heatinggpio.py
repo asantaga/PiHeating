@@ -75,6 +75,9 @@ def buttonDisableBoiler(channel):
         module_logger.debug('GPIO boiler off')
         GPIO.output(B_OFF,GPIO.LOW)
 
+#
+# This function appears to flash the LEDs and then check if heat is needed
+#
 def buttonCheckHeat(channel):
     module_logger.info('Button check heat pressed, channel %s' % channel)
     GPIO.output(B_OFF,GPIO.LOW)
