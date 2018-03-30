@@ -11,7 +11,6 @@ from sendmessage import SendMessage
 import json
 import hardware
 
-from heatinggpio import buttonCheckHeat
 from max import MaxInterface
 VAR = Variables()
 CUI = CreateUIPage()
@@ -31,7 +30,6 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         
 
     def do_GET(self):
-        useNeoPixel = VAR.readVariables(['UseNeoPixel'])
         module_logger.debug("GET %s" % self.path)
         if self.path=="/":
             roomTemps = CUI.createRooms()
@@ -41,6 +39,10 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 #
 # REST call to retun status of boiler :
 #
+        if self.path[0:10] == '/checkheat':
+            MaxInterface().checkHeat("web checkheat")
+            self.path="/index.html"
+
         if self.path[0:7] == '/status':
             from database import DbUtils
             DB=DbUtils() 
@@ -63,29 +65,26 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             SendMessage().setHouseMode("eco")
             self.path="/index.html"
             time.sleep(1)
-            buttonCheckHeat("requesthandler.ecomode")
+            MaxInterface().checkHeat("requesthandler.ecomode")
             
         if self.path[0:9] == '/automode':
             roomData = self.path
             SendMessage().setHouseMode("auto")
             self.path="/index.html"
             time.sleep(1)
-            buttonCheckHeat("requesthandler.automode")
+            MaxInterface().checkHeat("requesthandler.automode")
 
         if self.path[0:11] == '/rangegraph':
             print 'going to create rangeGraph page'
             CUI.rangeGraphUI()
             time.sleep(1)
 
-        if self.path[0:10] == '/heatcheck':
-            buttonCheckHeat("requesthandler.heatcheck")
-            self.path="/index.html"
 
         if self.path[0:5] == '/mode':
             roomData = self.path
             SendMessage().updateRoom(roomData)
             self.path="/index.html"
-            buttonCheckHeat("requesthandler.mode")
+            MaxInterface().checkHeat("requesthandler.mode")
 
         if self.path[0:6] == '/graph':
             roomName = self.path
@@ -95,12 +94,12 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         if self.path =="/?confirm=1&boilerswitch=Boiler+Enabled":
             VAR.writeVariable([['BoilerEnabled', 0]])
             self.path = "/index.html"
-            buttonCheckHeat("requesthandler.Boiler-disable")
+            MaxInterface().checkHeat("requesthandler.Boiler-disable")
 
         if self.path == '/?confirm=1&boilerswitch=Boiler+Disabled':
             VAR.writeVariable([['BoilerEnabled', 1]])
             self.path = "/index.html"
-            buttonCheckHeat("requesthandler.boiler-enable")
+            MaxInterface().checkHeat("requesthandler.boiler-enable")
 
         elif self.path =="/admin":
             roomTemps = CUI.createRooms()
@@ -113,9 +112,6 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 print 'In Linux so rebooting'
                 self.path = "/shutdown.html"
                 system("sudo reboot")
-            elif _platform == "win32":
-                print 'In Windows, Not rebooting'
-                self.path = "/admin.html"
                 
 
         try:

@@ -2,12 +2,10 @@ import time
 
 from database import DbUtils
 from variables import Variables
-#from veratemps import VeraVirtualTemps
 import logging
 
 DB = DbUtils()
 VAR = Variables()
-#VT = VeraVirtualTemps()
 
 
 class CreateUIPage():
@@ -424,7 +422,7 @@ class CreateUIPage():
                     <h2>Heating Status @ {}</h2>
                 </div>
                 <div class="col-sm-1 child">
-                    <a href="/index.html" class="btn btn-primary" role="button">Refresh Page </a>
+                    <a href="/checkheat" class="btn btn-primary" role="button">Check Heat</a>
                 </div>
             </div>
         </div>
@@ -458,10 +456,6 @@ class CreateUIPage():
             valvePos = rooms[4]
             roomMode = rooms[5]
             roomModes = ['AUTO', 'MANUAL', 'ECO', 'BOOST', 'VACATION']
-
-            #if sendVeraVirtualTemps:
-            #    if veraRoomsDict.has_key(roomText):
-            #        VT.veraSendTemp(veraRoomsDict[roomText], truTemp)
 
             if valvePos > 60:      # how far valve is open
                 cold_text = 'btn-info'
@@ -566,10 +560,6 @@ class CreateUIPage():
             cubeIsOn = 'btn-danger btn-md" style="font-size: {}vw;">Cube{} '.format(
                 baseFontSize - buttonSize, active_cube)
 
-#        if vera_state:
-#            veraIsOn = '<button type="button" class="btn-warning btn-md" style="font-size: {}vw;">Vera</button>'.format( baseFontSize - buttonSize)
-#        else:
-#            veraIsOn = ''
 
         html_text = """
     <div class="container-fluid bg-2 text-center">
@@ -579,7 +569,7 @@ class CreateUIPage():
         <input type="hidden" name="confirm" value="1" />
         <div class="btn-group">
             <input type="submit" class="btn {0}
-            <a href="/heatcheck" class="btn {1}<span class="badge" style="font-size: {5}vw;">{2}%</span></a>
+            <a href="/checkheat" class="btn {1}<span class="badge" style="font-size: {5}vw;">{2}%</span></a>
             <button type="button" class="btn {3}<span class="badge" style="font-size: {5}vw;">{4}</span></button>
             
         </form>

@@ -19,7 +19,7 @@ import multiprocessing
 from SocketServer import ThreadingMixIn
 from BaseHTTPServer import HTTPServer
 from requesthandler import MyRequestHandler
-from heatinggpio import setupGPIO, buttonCheckHeat, hBeat, setStatusLights
+from heatinggpio import setupGPIO, hBeat, setStatusLights
 from variables import Variables
 from sys import platform as _platform
 from os import system
@@ -53,7 +53,6 @@ class Main():
     def __init__(self):
         #Initialise the Logger
         logLevel = Variables().readVariables(['LoggingLevel']).rstrip('\r')
-        #useNeoPixel = Variables().readVariables(['UseNeoPixel'])
         self.logger = logging.getLogger("main")
         logging.basicConfig()
         self.logger.setLevel(logLevel)
@@ -92,7 +91,7 @@ class Main():
             loopStartTime = time.time()
             if loopStartTime >= nextLoopCheck:
                 print "running loop"
-                checkInterval, boiler_enabled, useNeoPixel = Variables().readVariables(['Interval', 'BoilerEnabled', 'UseNeoPixel'])
+                checkInterval, boiler_enabled,  = Variables().readVariables(['Interval', 'BoilerEnabled', ])
                 
                 if boiler_enabled != 1:
                     checkInterval = checkInterval * 2

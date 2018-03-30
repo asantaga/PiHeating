@@ -33,7 +33,6 @@ module_logger = logging.getLogger("main.max")
 class MaxInterface():
 
     def checkHeat(self, input_queue):
-        useNeoPixel = Variables().readVariables(['UseNeoPixel'])
         MAXData, validData = self.getData()
         if validData:
             self.parseData(MAXData)
@@ -378,37 +377,6 @@ class MaxInterface():
 
         """
         logger = logging.getLogger("main.max.getCurrentOutsidetemp")
-        Vera_Address, Vera_Port, VeraGetData, VeraOutsideTempID, VeraOutsideTempService, VeraTemp = Variables().readVariables(['VeraIP',
-                                                                                                                               'VeraPort',
-                                                                                                                               'VeraGetData',
-                                                                                                                               'VeraOutsideTempID',
-                                                                                                                               'VeraOutsideTempService',
-                                                                                                                               'VeraTemp'])
-#        if VeraTemp:
-#            try:
-#                f = urllib2.urlopen(VeraGetData.format(Vera_Address, Vera_Port,
-#                                                       VeraOutsideTempID,
-#                                                       VeraOutsideTempService,
-#                                                       'CurrentTemperature'))
-#                temp_c = f.read()
-#
-#                t = urllib2.urlopen("http://{}:{}/data_request?id=status&output_format=xml&DeviceNum={}".format(Vera_Address,
-#                                                                                                                Vera_Port,
-#                                                                                                                VeraOutsideTempID))
-#                t_xml = t.read()
-#                time_index = int(t_xml.find("LastUpdate")) + 19
-#                update_time = int(t_xml[time_index:(time_index + 10)])
-#
-#                current_time = time.time()
-#                if current_time - update_time <= (15 * 60):
-#                    logger.info('Vera Outside Temperature is %s' % temp_c)
-#                    return temp_c
-#                else:
-#                    logger.info('Vera Outside Temperature out of date')
-#
-#            except Exception, err:
-#                logger.exception("No Vera temp data %s" % err)
-#
         try:
             cityID, userKey = Variables().readVariables(
                 ['WeatherCityID', 'WeatherKey'])
@@ -471,19 +439,7 @@ class MaxInterface():
         DbUtils().insertTemps(roomTemps)
 
         # Control Boiler
-        #todo : Put if/else around veracontrol
         if boilerEnabled:
-#            try:
-#                _ = requests.get(veraControl.format(Vera_Address, Vera_Port,
-#                                                    Vera_Device, str(boilerState)), timeout=5)
-#
-#                Variables().writeVariable([['VeraOK', 1]])
-#                module_logger.info('message sent to Vera')
-#
-#            except:
-#                Variables().writeVariable([['VeraOK', 0]])
-#                module_logger.info("vera is unreachable")
-
             # Set Manual Boiler Switch if enabled
             if ManualHeatingSwitch:
                  module_logger.info("Switching local Relay %s" %boilerState)

@@ -53,7 +53,7 @@ def setupGPIO(input_queue):
         GPIO.setup(REBOOT,GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Reboot Raspberry Pi
           
         GPIO.add_event_detect(ON_OFF,GPIO.FALLING, callback=buttonDisableBoiler, bouncetime=500)# 05
-        GPIO.add_event_detect(CHECKH,GPIO.FALLING, callback=buttonCheckHeat, bouncetime=500)    # 06
+#        GPIO.add_event_detect(CHECKH,GPIO.FALLING, callback=buttonCheckHeat, bouncetime=500)    # 06
         #GPIO.add_event_detect(SHUTDOWN,GPIO.FALLING, callback=buttonShutdown, bouncetime=500)     # 12
         GPIO.add_event_detect(REBOOT,GPIO.FALLING, callback=buttonReboot, bouncetime=500)       # 13
 
@@ -77,32 +77,33 @@ def buttonDisableBoiler(channel):
 
 #
 # This function appears to flash the LEDs and then check if heat is needed
+# alas it cant call the MaxInterface function as it would be a circular reference
+# commenting out for now
+#def buttonCheckHeat(channel):
+#    module_logger.info('Button check heat pressed, channel %s' % channel)
+#    GPIO.output(B_OFF,GPIO.LOW)
+#    GPIO.output(H_ON,GPIO.LOW)
+#    GPIO.output(H_OFF,GPIO.LOW)
+#    GPIO.output(C_OK,GPIO.LOW)
+#    GPIO.output(C_ERR,GPIO.LOW)
 #
-def buttonCheckHeat(channel):
-    module_logger.info('Button check heat pressed, channel %s' % channel)
-    GPIO.output(B_OFF,GPIO.LOW)
-    GPIO.output(H_ON,GPIO.LOW)
-    GPIO.output(H_OFF,GPIO.LOW)
-    GPIO.output(C_OK,GPIO.LOW)
-    GPIO.output(C_ERR,GPIO.LOW)
-
-    for _ in range(4):
-        sleepTime = 0.1
-        GPIO.output(H_ON,GPIO.HIGH)
-        time.sleep(sleepTime)
-        GPIO.output(H_ON,GPIO.LOW)
-        GPIO.output(H_OFF,GPIO.HIGH)
-        time.sleep(sleepTime)
-        GPIO.output(H_OFF,GPIO.LOW)
-        GPIO.output(C_ERR,GPIO.HIGH)
-        time.sleep(sleepTime)
-        GPIO.output(C_ERR,GPIO.LOW)
-        GPIO.output(C_OK,GPIO.HIGH)
-        time.sleep(sleepTime)
-        GPIO.output(C_OK,GPIO.LOW)
-
-    # MaxInterface.checkHeat(0)
-    setStatusLights()
+#    for _ in range(4):
+#        sleepTime = 0.1
+#        GPIO.output(H_ON,GPIO.HIGH)
+#        time.sleep(sleepTime)
+#        GPIO.output(H_ON,GPIO.LOW)
+#        GPIO.output(H_OFF,GPIO.HIGH)
+#        time.sleep(sleepTime)
+#        GPIO.output(H_OFF,GPIO.LOW)
+#        GPIO.output(C_ERR,GPIO.HIGH)
+#        time.sleep(sleepTime)
+#        GPIO.output(C_ERR,GPIO.LOW)
+#        GPIO.output(C_OK,GPIO.HIGH)
+#        time.sleep(sleepTime)
+#        GPIO.output(C_OK,GPIO.LOW)
+#
+#    MaxInterface().checkHeat(0)
+#    setStatusLights()
 
 def buttonReboot(channel):
     module_logger.info('Button Reboot pressed, channel %s' % channel)

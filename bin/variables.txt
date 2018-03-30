@@ -3,19 +3,10 @@ WebPort,80
 MaxIP,192.168.0.222
 MaxIP2,192.168.0.0
 MaxPort,62910
-VeraIP,192.168.0.0
-VeraPort,3480
-VeraDevice,92
-VeraControl,http://{}:{}/data_request?id=lu_action&output_format=xml&DeviceNum={}&serviceId=urn:upnp-org:serviceId:SwitchPower1&action=SetTarget&newTargetValue={}
-VeraGetData,http://{}:{}/data_request?id=variableget&DeviceN2uum={}&serviceId={}&Variable={}
-VeraOutsideTempID,112
-VeraOutsideTempService,urn:upnp-org:serviceId:TemperatureSensor1
-VeraTemp,0
 BoilerEnabled,1
 Interval,135
 CubeOK,1
 ActiveCube,1
-VeraOK,0
 PrintData,1
 PageRefresh,67
 SingleRadThreshold,78
@@ -28,11 +19,7 @@ WeatherWidget,http://forecast.io/embed/#lat=51.5127&lon=-0.3052&units=UK&name=Ea
 BaseFontSize,3
 LoggingLevel,DEBUG
 ManualHeatingSwitch,1
-UseNeoPixel,0
 BoilerOverride,2
 ExpectedNoOfRooms,9
 RoomsCorrect,0
-VeraVirtualTemps,0
-VeraVirtualRooms,{'Bedroom 2':103; 'Bedroom 1':135; 'Dining-Extension':139; 'Living Room':157}
-VeraUpdateTemps,http://192.168.0.13:3480/data_request?id=variableset&DeviceNum={}&serviceId=urn:upnp-org:serviceId:TemperatureSensor1&Variable=CurrentTemperature&Value={}
 HouseEcoTemp,15
