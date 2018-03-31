@@ -19,12 +19,15 @@ finish
 reboot
 
 sudo apt-get update
+
 sudo apt-get upgrade
+
 sudo rpi-update
 
-disable bluetooth
-	sudo systemctl disable hciuart
-	add dtoverlay=pi3-miniuart-bt to /boot/config.txt file
+## disable bluetooth
+sudo systemctl disable hciuart
+
+add dtoverlay=pi3-miniuart-bt to /boot/config.txt file
 
 start WinSCP
 connect to RPi
