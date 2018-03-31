@@ -1,36 +1,27 @@
 The GPIO pins used in the code
 
-LED's
+Depending on your use you can choose from the following LEDs
+I consider H_ON,HBEAT and Power to be the only mandatory LEDS. The rest , including the buttons are optional based on your needs
+
+If you want to change these you can do so in the code in heatinggpio.py
+
+
+# LED's
 
 B_OFF = 04  # Boiler off LED
 H_ON  = 17  # Heat On LED
 H_OFF = 18  # Heat Off LED
 C_OK  = 22  # Cube OK LED
 C_ERR = 23  # Cube Error LED
-V_OK  = 24  # Vera Ok LED
-V_ERR = 25  # Vera Error LED
 HBEAT = 27  # HEARTBEAT LED
 
-Momentary buttons
+# Momentary buttons
 
 ON_OFF = 05 # Boiler ON/Off button
 CHECKH = 06 # Manual Valve check button
 SHUTDOWN = 12   # Shutdown RPi button
-REBOOT   = 13   # Reboot RPi button
+REBOOT   = 11   # Reboot RPi button
 
-Relay output driver
+# Relay output driver
 
-BOILER_SW= 21   # Boiler relay switch output
-
-NeoPixel 	PMW Pin 18
-
-For Serial NeoPixel Version
-
-pin	use
-1	3.3V Arduino Supply
-2	5V NeoPixel supply
-6	GND
-8	GPIO14 (UART_TXD)
-10	GPIO15 (UART_RXD)
-
-			
+BOILER_SW= 07   # Boiler relay switch output

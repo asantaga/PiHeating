@@ -97,6 +97,13 @@ To enable start at boot use
 sudo systemctl enable piheating.service 
 ```
 
+## Making it reliable
+
+The PiHeating software provides some graphs and charts for viewing, this is great however it does mean the PI is constantly writing to the SD , which is never good. The software by default copys itself to /run/shm (Ramdisk) so that it doesnt touch the SD card. This works great BUT when the raspberry PI is rebooted it will loose the history. If you want long term history then I recommend 
+* Modifying startPiHeating.sh so that doesnt copy the code to /run/shm
+* (Recommended) Use HomeAssistant somewhere else, and use that with influxDB & grafana. This is my preferred approach as I use homeAssistant to add geolocation to the solutioon (ie if your not at home then turn heating off)
+
+
 ##Sort out the hardware
 
 For this software to work properly you need the following hardware
