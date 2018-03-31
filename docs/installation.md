@@ -4,7 +4,7 @@
 
 ## Configure the Pi
 
-Install a Basic raspberry jessie full image
+Install a Basic raspberry pi image
 
 From command line or putty session
 
@@ -55,6 +55,9 @@ pip install psutil
 	mkdir PiHeating
 	cd PiHeating
 	git clone https://github.com/asantaga/PiHeating
+        pip install requests
+        pip install setuptools
+	pip install psutils
 
 ​	
 

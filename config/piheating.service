@@ -3,7 +3,7 @@ Description=Pi Heating
 After=network.target
 
 [Service]
-ExecStart=/home/pi/PiHeating/startupPiHeating.sh
+ExecStart=/bin/bash /home/pi/PiHeating/startupPiHeating.sh
 WorkingDirectory=/home/pi/PiHeating/bin
 StandardOutput=inherit
 StandardError=inherit
