@@ -9,14 +9,14 @@ Install a Basic raspberry pi image
 From command line or putty session
 
 `sudo raspi-config`
-	expand file system
-	change user password
-	advanced
-		enable I2C
-		disable serial boot console
+1. expand file system
+2. change user password
+3. Select advanced
+..* enable I2C
+..* disable serial boot console
 
-finish
-reboot
+4. finish
+5. reboot
 
 `sudo apt-get update`
 
