@@ -1,12 +1,10 @@
-#Installation Instructions
-
-
+# Installation Instructions
 
 ## Configure the Pi
 
-Install a Basic raspberry pi image
+* Install a Basic raspberry pi image
 
-From command line or putty session
+* From command line or putty session
 
 `sudo raspi-config`
 1. expand file system
@@ -18,16 +16,23 @@ From command line or putty session
 4. finish
 5. reboot
 
-`sudo apt-get update`
-
-`sudo apt-get upgrade`
-
-`sudo rpi-update`
+```sudo apt-get update
+sudo apt-get upgrade`
+sudo rpi-update```
 
 ## disable bluetooth
-`sudo systemctl disable hciuart`
+```sudo systemctl disable hciuart
+add dtoverlay=pi3-miniuart-bt to /boot/config.txt file```
 
-`add dtoverlay=pi3-miniuart-bt to /boot/config.txt file`
+## Installed Required software
+
+``` sudo apt-get install git build-essential python-dev python-pip
+sudo pip install psutil
+sudo pip install requests
+sudo pip install setuptools
+sudo pip install psutils
+```
+
 
 start WinSCP
 connect to RPi
@@ -46,20 +51,20 @@ connect to RPi
 
 From command line or putty session	
 
-sudo apt-get install python-dev
-pip install psutil
 
 ## Install the software
 
-	cd $HOME
+PiHeating has two primary branches in the git repository
+* master : The primary development branch
+* Prodv1 : V1 , Stable and production worthy
+
+
+```	cd $HOME
 	mkdir PiHeating
 	cd PiHeating
-	git clone https:ithub.com/asantaga/PiHeating
-        pip install requests
-        pip install setuptools
-	pip install psutils
+	git clone https:ithub.com/asantaga/PiHeating Prodv1
+```
 
-​	
 
 Edit Variables.txt in the bin directory with your maxcube parameters. Use variables_Explanation.txt in the docs folder to understand what all the parameters mean. Many parameters are set dynamically by the system.
 
