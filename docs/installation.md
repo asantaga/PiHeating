@@ -68,7 +68,7 @@ git clone https:ithub.com/asantaga/PiHeating Prodv1
 
 Edit Variables.txt in the bin directory with your maxcube parameters. Use variables_Explanation.txt in the docs folder to understand what all the parameters mean. Many parameters are set dynamically by the system.
 
-##Test the software
+## Test the software
 
 ```
 cd $HOME/PiHeating/bin
@@ -78,9 +78,9 @@ sudo python main.py
 Hopefully it runs ok usually there are a few errors first run stop it and start again
 CTRL +C to stop, there should now be a new database file and some log files
 
-sudo python main.py 
+```sudo python main.py 
 
-on your PC you should be able to load web UI at http://RPi-IP
+On your PC you should be able to load web UI at http://<RaspberryPi-IP>
 
 ​	
 
@@ -115,7 +115,7 @@ The PiHeating software provides some graphs and charts for viewing, this is grea
 * (Recommended) Use HomeAssistant somewhere else, and use that with influxDB & grafana. This is my preferred approach as I use homeAssistant to add geolocation to the solutioon (ie if your not at home then turn heating off)
 
 
-##Sort out the hardware
+## Sort out the hardware
 
 For this software to work properly you need the following hardware
 
