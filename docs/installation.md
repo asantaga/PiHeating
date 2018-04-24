@@ -59,10 +59,10 @@ PiHeating has two primary branches in the git repository
 * Prodv1 : V1 , Stable and production worthy
 
 
-```	cd $HOME
-	mkdir PiHeating
-	cd PiHeating
-	git clone https:ithub.com/asantaga/PiHeating Prodv1
+```cd $HOME
+mkdir PiHeating
+cd PiHeating
+git clone https:ithub.com/asantaga/PiHeating Prodv1
 ```
 
 
