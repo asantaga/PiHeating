@@ -4,7 +4,7 @@ MaxIP,192.168.0.222
 MaxIP2,192.168.0.0
 MaxPort,62910
 BoilerEnabled,1
-Interval,135
+Interval,360
 CubeOK,1
 ActiveCube,1
 PrintData,1

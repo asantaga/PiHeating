@@ -4,11 +4,11 @@
 
 ## Configure the Pi
 
-Install a Basic raspberry pi image
+1. Install a Basic raspberry pi image
 
-From command line or putty session
+2. From command line or putty session
 
-sudo raspi-config
+$ sudo raspi-config
 	expand file system
 	change user password
 	advanced
@@ -28,6 +28,18 @@ sudo rpi-update
 sudo systemctl disable hciuart
 
 add dtoverlay=pi3-miniuart-bt to /boot/config.txt file
+
+You need to install git,pip and psutils
+
+A
+A
+A
+
+
+
+A
+A
+A
 
 start WinSCP
 connect to RPi
@@ -54,7 +66,7 @@ pip install psutil
 	cd $HOME
 	mkdir PiHeating
 	cd PiHeating
-	git clone https://github.com/asantaga/PiHeating
+	git clone https:ithub.com/asantaga/PiHeating
         pip install requests
         pip install setuptools
 	pip install psutils
