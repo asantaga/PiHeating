@@ -50,7 +50,7 @@ You can also get HomeAssistant to change the mode of the house from ECO to AUTO 
 
 e.g. 
 
-1. Setup  [GPSLogger](https://www.home-assistant.io/components/device_tracker.gpslogger/) in home assistant so that it knows about your mobile phones
+1. Setup  [GPSLogger](https://www.home-assistant.io/components/device_tracker.gpslogger/) in home assistant so that it knows about your mobile phones. If this is working correctly you will have a number of "device_tracker" devices in HomeAssistant. For me I have device_tracker.josphone and device_tracker.angelosphone
 
 2. Configure a zone around your home , say 500m, 
    configuration.yaml
@@ -67,6 +67,47 @@ e.g.
 
 3. Configure Automation so that when you arrive within the zone it calls the boiler to Auto Mode, when you leave set the boiler to ECO mode, e.g. 
 
+*configuration.yaml*
+This entry adds a REST call to the RaspberryPI, telling it to either go to ECO mode or to Auto mode. Change the IP address of your raspberry pi
+```
+rest_command:
+  heating_ecomode:
+     url: 'http://192.168.0.28/ecomode'
+     method: GET
+     timeout: 60
+  heating_automode:
+     url: 'http://192.168.0.28/automode'
+     method: GET
+     timeout: 60
+```
+*automations.yaml*
+These two automations (written backwards sorry), listen to the locations of the two device trackers (two in my case, you can have one), if both are not at home then set the boiler to ECO mode, else set to auto
+
    ```
-   TBD
+- action:
+  - alias: ''
+    data:
+      message: Neither Angelo or Jo Home, turn boiler off
+    service: notify.mypushbullet
+  - service: rest_command.heating_ecomode
+  alias: NeitherAngeloOrJoHome
+  condition: []
+  id: '1521329285927'
+  trigger:
+  - platform: template
+    value_template: "{% if is_state(\"device_tracker.angelosphone\", \"home\") or\n\
+      \     is_state(\"device_tracker.josphone\", \"home\") %}\nfalse\n{% else %}\n\
+      true\n{% endif %}"
+
+
+- action:
+  - service: rest_command.heating_automode
+  alias: AngeloOrJoHome
+  condition: []
+  id: '1521331821816'
+  trigger:
+  - platform: template
+    value_template: "{% if is_state(\"device_tracker.angelosphone\", \"home\") or\n\
+      \     is_state(\"device_tracker.josphone\", \"home\") %}\ntrue\n{% endif %}"
    ```
+   
