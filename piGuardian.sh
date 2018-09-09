@@ -10,7 +10,7 @@ do
    else
        echo "server is down ✗ `date`" >> stat.log
        echo "REBOOTING Server" >> stat.log
-       /sbin/shutdown -r now
+       sudo /sbin/shutdown -r now
    fi
    echo "Sleeping for 10mins" >> stat.log
    # Sleep for 5mins before testing again
