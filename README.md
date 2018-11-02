@@ -1,12 +1,11 @@
 # Deprecated
 ---
-```
+
 Alas this code is now deprecated for me. Im suffering from a known problem with the max!cube which is if you poll it too often it eventually hard resets itself and everything stops working.. You need to go around "RESET"each TRV and then manually add them to the cube again.. For a heating system is isnt ideal.. 
 
 Eq3 havent responded to my plees of assistance and this screams of Internet of Abandonment...
 
 Until I have a solution for the cube resetting itself I wont be developing this any further
-```
 ---
 
 
