@@ -1,3 +1,15 @@
+# Deprecated
+---
+```
+Alas this code is now deprecated for me. Im suffering from a known problem with the max!cube which is if you poll it too often it eventually hard resets itself and everything stops working.. You need to go around "RESET"each TRV and then manually add them to the cube again.. For a heating system is isnt ideal.. 
+
+Eq3 havent responded to my plees of assistance and this screams of Internet of Abandonment...
+
+Until I have a solution for the cube resetting itself I wont be developing this any further
+```
+---
+
+
 # PiHeating 
 This code is based on Stephen Halls original code ([stephenmhall/PiHeating](https://github.com/stephenmhall/PiHeating)) however now heavily modified. Specifically Ive simplified the code and removed the vera device control stuff. If you want the vera control then I suggest you look at the original code (Stephenmhall) or let me know and I'll look to adding it back in.
 
